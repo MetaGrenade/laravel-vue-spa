@@ -1,9 +1,9 @@
 <template>
   <div class="main-layout">
-    <navbar />
+    <navbar/>
 
-    <div class="container mt-4">
-      <child />
+    <div class="container-fluid">
+      <child/>
     </div>
   </div>
 </template>

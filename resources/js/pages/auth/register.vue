@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-lg-8 m-auto">
+    <div class="col-12 col-lg-8 mx-auto my-4">
       <card v-if="mustVerifyEmail" :title="$t('register')">
         <div class="alert alert-success" role="alert">
           {{ $t('verify_email_address') }}
