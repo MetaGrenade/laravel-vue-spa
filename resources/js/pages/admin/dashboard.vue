@@ -1,13 +1,11 @@
 <template>
-	<div>
-		<h1>Admin Dashboard</h1>
-		<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolor molestiae et adipisci minima fugiat possimus. Rem quos animi nisi, quod consequatur nemo accusantium quidem magnam officia veniam, voluptas dicta saepe.</p>
-	</div>
+  <div>
+    <h1>Admin Dashboard</h1>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolor molestiae et adipisci minima fugiat possimus. Rem quos animi nisi, quod consequatur nemo accusantium quidem magnam officia veniam, voluptas dicta saepe.</p>
+  </div>
 </template>
 
 <script>
-import Form from 'vform'
-
 export default {
   scrollToTop: false,
 
@@ -16,11 +14,11 @@ export default {
   },
 
   data: () => ({
-    
+
   }),
 
   methods: {
-    
+
   }
 }
 </script>

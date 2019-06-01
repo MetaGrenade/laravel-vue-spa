@@ -5,35 +5,35 @@
         {{ appName }}
       </router-link>
 
-      <button class="navbar-toggler" type="button" data-toggle="offcanvas" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" 
-        v-on:click="offcanvas" 
-        v-bind:class="{ 'osc-active': isOffcanvas }"
+      <button class="navbar-toggler" type="button" data-toggle="offcanvas" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false"
+              :class="{ 'osc-active': isOffcanvas }"
+              @click="offcanvas"
       >
         <span class="navbar-toggler-icon" />
       </button>
-      
-      <div id="navbarToggler" class="offcanvas-collapse navbar-collapse" v-bind:class="{ open: isOffcanvas }">
+
+      <div id="navbarToggler" class="offcanvas-collapse navbar-collapse" :class="{ open: isOffcanvas }">
         <ul class="navbar-nav mr-auto">
           <!-- <li class="nav-item">
             <a class="nav-link" href="#">Blog</a>
           </li> -->
-          <div v-on:click="offcanvas">
+          <div @click="offcanvas">
             <router-link :to="{ name: 'blog' }" tag="li">
               <a class="nav-link" href="#">
-                <fa icon="newspaper" fixed-width/>
+                <fa icon="newspaper" fixed-width />
                 {{ $t('blog') }}
               </a>
             </router-link>
           </div>
-          <locale-dropdown/>
+          <locale-dropdown />
         </ul>
         <ul class="navbar-nav ml-auto">
-          <li class="dropdown-divider"/>
+          <li class="dropdown-divider" />
           <!-- Authenticated -->
-          <div v-on:click="offcanvas">
-            <router-link :to="{ name: 'admin' }" tag="li" v-if="isUserAdmin">
+          <div @click="offcanvas">
+            <router-link v-if="user && isUserAdmin" :to="{ name: 'admin.dashboard' }" tag="li">
               <a class="nav-link text-danger" href="#">
-                <fa icon="shield-alt" fixed-width/>
+                <fa icon="shield-alt" fixed-width />
                 {{ $t('admin') }}
               </a>
             </router-link>
@@ -43,18 +43,17 @@
               <img :src="user.photo_url" class="rounded-circle profile-photo mr-1">
               {{ user.name }}
             </a>
-            <div class="dropdown-menu">
-              <div v-on:click="offcanvas">
+            <div class="dropdown-menu dropdown-menu-right">
+              <div @click="offcanvas">
                 <router-link :to="{ name: 'settings.profile' }" class="dropdown-item pl-3">
-                  <fa icon="cog" fixed-width/>
+                  <fa icon="cog" fixed-width />
                   {{ $t('settings') }}
                 </router-link>
               </div>
-
-              <div class="dropdown-divider"/>
-              <div v-on:click="offcanvas">
+              <div class="dropdown-divider" />
+              <div @click="offcanvas">
                 <a href="#" class="dropdown-item pl-3" @click.prevent="logout">
-                  <fa icon="sign-out-alt" fixed-width/>
+                  <fa icon="sign-out-alt" fixed-width />
                   {{ $t('logout') }}
                 </a>
               </div>
@@ -62,12 +61,12 @@
           </li>
           <!-- Guest -->
           <template v-else>
-            <li class="nav-item" v-on:click="offcanvas">
+            <li class="nav-item" @click="offcanvas">
               <router-link :to="{ name: 'login' }" class="nav-link" active-class="active">
                 {{ $t('login') }}
               </router-link>
             </li>
-            <li class="nav-item" v-on:click="offcanvas">
+            <li class="nav-item" @click="offcanvas">
               <router-link :to="{ name: 'register' }" class="nav-link" active-class="active">
                 {{ $t('register') }}
               </router-link>
@@ -90,30 +89,28 @@ export default {
 
   data: () => ({
     appName: window.config.appName,
-    isOffcanvas : true,
+    isOffcanvas: true
   }),
 
   computed: {
-		isUserSuperAdmin () {
-			if(this.user.role == 'super-admin'){
-				return true;
-			}
-			else {
-				return false;
-			}
-		},
-		isUserAdmin () {
-			if(this.user.role == 'super-admin' || this.user.role == 'admin' || this.user.role == 'moderator'){
-				return true;
-			}
-			else {
-				return false;
-			}
-		},
-		...mapGetters({
-			user: 'auth/user'
-		})
-	},
+    isUserSuperAdmin () {
+      if (this.user && this.user.role === 'super-admin') {
+        return true
+      } else {
+        return false
+      }
+    },
+    isUserAdmin () {
+      if (this.user && (this.user.role === 'super-admin' || this.user.role === 'admin' || this.user.role === 'moderator')) {
+        return true
+      } else {
+        return false
+      }
+    },
+    ...mapGetters({
+      user: 'auth/user'
+    })
+  },
 
   methods: {
     async logout () {
@@ -123,12 +120,10 @@ export default {
       // Redirect to login.
       this.$router.push({ name: 'login' })
     },
-    offcanvas: function() {
-      console.log('FK')
-      if(this.isOffcanvas === false){
+    offcanvas: function () {
+      if (this.isOffcanvas === false) {
         this.isOffcanvas = true
-      }
-      else {
+      } else {
         this.isOffcanvas = false
       }
       // some code to filter users
