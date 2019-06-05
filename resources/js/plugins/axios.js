@@ -36,6 +36,20 @@ axios.interceptors.response.use(response => response, error => {
     })
   }
 
+  if (status === 403 && store.getters['auth/check']) {
+    Swal.fire({
+      type: 'error',
+      title: i18n.t('error_insufficient_title'),
+      text: i18n.t('error_insufficient_permission'),
+      reverseButtons: true,
+      confirmButtonText: i18n.t('ok'),
+      cancelButtonText: i18n.t('cancel')
+    })
+    .then(() => {
+      router.push({ name: 'home' })
+    })
+  }
+
   if (status === 401 && store.getters['auth/check']) {
     Swal.fire({
       type: 'warning',

@@ -28,7 +28,7 @@ export default {
   props: {
     blog: {
       type: Object,
-      required: true
+      required: true, default: {}
     }
   },
   //   middleware: 'auth',

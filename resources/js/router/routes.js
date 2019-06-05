@@ -15,6 +15,7 @@ export default [
   { path: '/home', name: 'home', component: page('home.vue') },
 
   { path: '/blog', name: 'blog', component: page('blog.vue') },
+  { path: '/blog/:id', name: 'blog.view', component: page('blog-view.vue') },
   // { path: '/blog/:', name: 'blog.view', component: page('blog.vue') },
 
   { path: '/settings',
@@ -33,7 +34,8 @@ export default [
       { path: 'dashboard', name: 'admin.dashboard', component: page('admin/dashboard.vue') },
       { path: 'roles', name: 'admin.roles', component: page('admin/roles.vue') },
       { path: 'users', name: 'admin.users', component: page('admin/users.vue') },
-      { path: 'blogs', name: 'admin.blogs', component: page('admin/blogs.vue') }
+      { path: 'blogs/edit/:id', name: 'admin.blogs.edit', component: page('admin/blogs-edit.vue') },
+      { path: 'blogs', name: 'admin.blogs', component: page('admin/blogs.vue') },
     ]
   },
 

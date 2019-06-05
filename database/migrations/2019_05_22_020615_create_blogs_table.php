@@ -17,8 +17,12 @@ class CreateBlogsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->default(0);
             $table->string('title')->default(NULL)->nullable();
-            $table->text('body')->default(NULL)->nullable();
-            $table->boolean('published');
+            $table->string('slug')->unique();
+            $table->integer('category_id')->default(NULL)->nullable();
+            $table->boolean('published')->default(false);
+            $table->string('image')->default(NULL)->nullable();
+            $table->text('intro')->default(NULL)->nullable();
+            $table->text('content')->default(NULL)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

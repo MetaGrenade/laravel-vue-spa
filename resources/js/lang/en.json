@@ -1,8 +1,17 @@
 {
   "ok": "Ok",
   "cancel": "Cancel",
+  "delete": "Delete",
+  "save": "Save",
   "error_alert_title": "Oops...",
   "error_alert_text": "Something went wrong! Please try again.",
+  "error_insufficient_title": "Access Denied!",
+  "error_login_required": "User login is required!",
+  "error_insufficient_permission": "You do not have permission to perform this action!",
+  "warning_confirm_title": "Hold Up!",
+  "warning_confirm_delete": "Are you sure you want to delete this?",
+  "warning_confirm_hide": "Are you sure you want to unpublish (hide) this?",
+  "warning_confirm_publish": "Are you sure you want to publish this?",
   "token_expired_alert_title": "Session Expired!",
   "token_expired_alert_text": "Please log in again to continue.",
   "login": "Log In",
@@ -19,6 +28,8 @@
   "toggle_navigation": "Toggle navigation",
   "home": "Home",
   "blog": "Blog",
+  "blog_edit": "Edit Blog",
+  "blog_updated": "Blog Successfully Updated!",
   "blogs": "Blogs",
   "dashboard": "Dashboard",
   "user": "User",
@@ -49,5 +60,6 @@
   "send_verification_link": "Send Verification Link",
   "resend_verification_link": "Resend Verification Link ?",
   "failed_to_verify_email": "Failed to verify email.",
-  "verify_email_address": "We sent you an email with an the verification link."
+  "verify_email_address": "We sent you an email with an the verification link.",
+  "save_update": "Save / Update"
 }

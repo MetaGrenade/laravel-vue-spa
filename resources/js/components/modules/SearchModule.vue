@@ -22,7 +22,8 @@ export default {
   props: {
     model: {
       type: String,
-      required: true
+      required: true, 
+      default: null
     }
   },
   //   middleware: 'auth',

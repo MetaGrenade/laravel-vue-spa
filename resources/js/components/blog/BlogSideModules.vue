@@ -34,12 +34,30 @@ export default {
   data () {
     return {
       categories: [
-        { name: 'Cat One', url: '#' },
-        { name: 'Cat Two', url: '#' },
-        { name: 'Cat Three', url: '#' },
-        { name: 'Cat Four', url: '#' },
-        { name: 'Cat Five', url: '#' },
-        { name: 'Cat Six', url: '#' }
+        { 
+          name: 'Cat One', 
+          url: '#' 
+        },
+        { 
+          name: 'Cat Two', 
+          url: '#' 
+        },
+        { 
+          name: 'Cat Three', 
+          url: '#' 
+          },
+        { 
+          name: 'Cat Four', 
+          url: '#' 
+        },
+        { 
+          name: 'Cat Five', 
+          url: '#' 
+        },
+        { 
+          name: 'Cat Six', 
+          url: '#' 
+        }
       ]
     }
   },

@@ -32,34 +32,95 @@ class BlogController extends Controller
 
 
     //
+    public function adminIndex()
+    {
+        $b = Blog::all();
+
+        $blogs = array();
+        foreach($b as $blog){
+            $blogs['_'.$blog['id']] = $blog;
+        }
+        
+        return response()->json($blogs, 200);
+    }
+
     public function index()
     {
         return Blog::where('published', true)->get();
     }
 
-    public function show(Article $blog)
+    public function show(Blog $blog)
     {
-        return $blog;
+        return response()->json($blog, 200);
     }
 
     public function store(Request $request)
     {
-        $blog = Blog::create($request->all());
+        $data = self::formValidation($request);
+
+        $blog = Blog::create($data);
 
         return response()->json($blog, 201);
     }
 
-    public function update(Request $request, Article $blog)
-    {
-        $blog->update($request->all());
+    // public function update(Request $request, Blog $blog)
+    // {
+    //     $blog->update($request->all());
 
+    //     return response()->json($blog, 200);
+    // }
+
+    public function update(Request $request, Blog $blog)
+    {
+        $user = $request->user();
+
+        $request['user_id'] = $user->id;
+
+        $data = self::formValidation($request, $blog);
+
+        // return tap($blog)->update($data);
+
+        $blog->update($data);
         return response()->json($blog, 200);
     }
 
-    public function delete(Article $blog)
+    public function delete(Blog $blog)
     {
-        $blog->delete();
+        try 
+        {
+            $blog->delete();
+            return response()->json(null, 204);
+        }
+        catch (Exception $e) {
+            return response()->json($e->getMessage(), 500);
+        }
+    }
 
-        return response()->json(null, 204);
+    public function publish(Blog $blog)
+    {
+        $blog->update(['published' => true]);
+        return response()->json($blog, 200);
+    }
+
+    public function unpublish(Blog $blog)
+    {
+        $blog->update(['published' => false]);
+        return response()->json($blog, 200);
+    }
+
+    function formValidation($data, $blog)
+    {
+        $validated = $this->validate($data, [
+            'user_id' => 'required',
+            'title' => 'required',
+            'slug' => 'required|unique:blogs,slug,'.$blog->id,
+            'category_id' => 'required|integer',
+            'published' => 'required|integer',
+            'image' => 'nullable|image|mimes:jpeg,bmp,png,jpg,svg|max:2048',
+            'intro' => 'required|min:50|max:500',
+            'content' => 'required',
+        ]);
+
+        return $validated;
     }
 }
