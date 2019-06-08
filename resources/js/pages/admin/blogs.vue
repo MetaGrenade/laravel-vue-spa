@@ -135,8 +135,6 @@ export default {
 					// swal("Cancelled", "Your imaginary file is safe :)", "error");
 				}
 			})
-			
-			this.blogs.$remove('_'+blog.id)
 		},
 		hideBlog: async function(blog) {
 		  Swal.fire({

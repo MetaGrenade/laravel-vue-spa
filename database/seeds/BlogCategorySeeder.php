@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Blog;
+use App\BlogCategories;
 
-class BlogTableSeeder extends Seeder
+class BlogCategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,23 +13,18 @@ class BlogTableSeeder extends Seeder
     public function run()
     {
         // Let's truncate our existing records to start from scratch.
-        Blog::truncate();
+        BlogCategories::truncate();
 
         $faker = \Faker\Factory::create();
 
         // And now, let's create a few articles in our database:
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 10; $i++) {
             $title = $faker->sentence;
             $slug = Str::slug($title);
-            Blog::create([
-                'user_id' =>  $faker->randomDigit,
+            BlogCategories::create([
                 'title' => $title,
                 'slug' => $slug,
-                'category_id' => $faker->numberBetween($min = 1, $max = 10),
-                'published' => $faker->boolean($chanceOfGettingTrue = 60),
-                'image' => null,
-                'intro' => $faker->paragraph,
-                'content' => $faker->paragraph,
+                'published' => $faker->boolean($chanceOfGettingTrue = 50),
             ]);
         }
     }
