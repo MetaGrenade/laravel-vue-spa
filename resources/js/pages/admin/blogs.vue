@@ -92,12 +92,6 @@ export default {
 	},
 
   	methods: {
-		async fetchBlogs () {
-			// get blog data from api?
-			const { data } = await axios.get('/api/admin/blogs')
-			// console.log(data)
-			this.blogs = data
-		},
 	  	deleteBlog: async function (blog) {
 			var self = this;
 		  	Swal.fire({

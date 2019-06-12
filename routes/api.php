@@ -12,11 +12,16 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+// SUPER-ADMIN ONLY
 Route::group(['middleware' => 'super:api'], function () {
-    // super admin only routes
+    Route::delete('admin/blogs/{blog}/delete', 'BlogController@forceDelete');
+    Route::delete('admin/users/{user}/delete', 'AdminUsersController@forceDelete');
 });
 
+// ADMIN ONLY
 Route::group(['middleware' => 'admin:api'], function () {
+    // blogs
     Route::get('admin/blogs', 'BlogController@adminIndex');
     Route::get('admin/blogs/{blog}', 'BlogController@show');
     Route::post('admin/blogs', 'BlogController@store');
@@ -24,8 +29,17 @@ Route::group(['middleware' => 'admin:api'], function () {
     Route::patch('admin/blogs/{blog}/publish', 'BlogController@publish');
     Route::patch('admin/blogs/{blog}/unpublish', 'BlogController@unpublish');
     Route::delete('admin/blogs/{blog}', 'BlogController@delete');
+
+    // users
+    Route::get('admin/users', 'AdminUsersController@index');
+    Route::get('admin/users/{user}', 'AdminUsersController@show');
+    Route::post('admin/users', 'AdminUsersController@store');
+    Route::patch('admin/users/{user}', 'AdminUsersController@update');
+    Route::delete('admin/users/{user}', 'AdminUsersController@delete');
+    Route::delete('admin/users/{user}/delete', 'AdminUsersController@forceDelete');
 });
 
+// USER LOGIN REQUIRED
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('logout', 'Auth\LoginController@logout');
 
@@ -37,6 +51,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::patch('settings/password', 'Settings\PasswordController@update');
 });
 
+// GUEST ONLY
 Route::group(['middleware' => 'guest:api'], function () {
     Route::post('login', 'Auth\LoginController@login');
     Route::post('register', 'Auth\RegisterController@register');

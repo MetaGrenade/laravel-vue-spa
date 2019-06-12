@@ -18,23 +18,23 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(usr, index) in users" :key="index" :usr="usr">
-            <td>{{ usr.id }}</td>
+          <tr v-for="(user, index) in users" :key="index" :user="user">
+            <td>{{ user.id }}</td>
             <td>
               <router-link :to="{ name: 'admin.users' }">
-                {{ usr.name }}
+                {{ user.name }}
               </router-link>
             </td>
-            <td>{{ usr.role }}</td>
-            <td>{{ usr.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>{{ user.email }}</td>
             <td>
-              <button class="btn btn-sm btn-primary">
+              <button class="btn btn-sm btn-primary" v-if="user.id !== 1">
                 Edit
               </button>
-              <button class="btn btn-sm btn-warning">
+              <button class="btn btn-sm btn-warning" v-if="user.id !== 1">
                 Disable
               </button>
-              <button v-if="isUserSuperAdmin" class="btn btn-sm btn-danger">
+              <button class="btn btn-sm btn-danger" v-if="isUserSuperAdmin && user.id !== 1">
                 Delete
               </button>
             </td>
@@ -49,54 +49,104 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  scrollToTop: false,
-  metaInfo () {
-    return { title: this.$t('admin_users') }
-  },
-  data () {
-    return {
-      users: [
-        {
-          id: 1,
-          name: 'Meta',
-          email: 'admin@admin.com',
-          role: 'super-admin'
-        },
-        {
-          id: 2,
-          name: 'User',
-          email: 'user@user.com',
-          role: 'user'
-        },
-        {
-          id: 3,
-          name: 'Writer',
-          email: 'writer@user.com',
-          role: 'writer'
-        },
-        {
-          id: 4,
-          name: 'VIP',
-          email: 'vip@user.com',
-          role: 'vip'
-        }
-      ]
-    }
-  },
-  computed: {
-    isUserSuperAdmin () {
-      if (this.user.role === 'super-admin') {
-        return true
-      } else {
-        return false
-      }
-    },
-    ...mapGetters({
-      user: 'auth/user'
-    })
-  },
-  methods: {
-
-  }
+	scrollToTop: false,
+	metaInfo () {
+		return { title: this.$t('admin_users') }
+	},
+	data () {
+		return {}
+	},
+	computed: {
+		isUserSuperAdmin () {
+			if (this.user.role === 'super-admin') {
+				return true
+			} else {
+				return false
+			}
+		},
+		...mapGetters({
+			user: 'auth/user',
+			users: 'users/users'
+		})
+	},
+	mounted() {
+		this.$store.dispatch('users/fetchUsersAdmin')
+	},
+	methods: {
+		disableUser: async function (user) {
+			var self = this;
+		  	Swal.fire({
+				type: 'question',
+				title: this.$t('warning_confirm_title'),
+				text: this.$t('warning_confirm_delete_user'),
+				reverseButtons: true,
+				confirmButtonText: this.$t('delete'),
+				showCancelButton: true,
+				cancelButtonText: this.$t('cancel')
+			})
+			.then(async function(e) {
+				if (e.value === true) {
+					self.$store.dispatch('users/deleteUser', user)
+					Swal.fire({
+						type: 'success',
+						title: 'Deleted!',
+						text: 'User account successfully deleted!',
+					});
+				} else {
+					console.log('cancelled')
+					// swal("Cancelled", "Your imaginary file is safe :)", "error");
+				}
+			})
+		},
+		deleteUser: async function (user) {
+			var self = this;
+		  	Swal.fire({
+				type: 'question',
+				title: this.$t('warning_confirm_title'),
+				text: this.$t('warning_confirm_delete_user'),
+				reverseButtons: true,
+				confirmButtonText: this.$t('delete'),
+				showCancelButton: true,
+				cancelButtonText: this.$t('cancel')
+			})
+			.then(async function(e) {
+				if (e.value === true) {
+					self.$store.dispatch('users/forceDeleteUser', user)
+					Swal.fire({
+						type: 'success',
+						title: 'Deleted!',
+						text: 'User account successfully deleted!',
+					});
+				} else {
+					console.log('cancelled')
+					// swal("Cancelled", "Your imaginary file is safe :)", "error");
+				}
+			})
+		},
+		enableUser: async function(user) {
+			var self = this;
+		  	Swal.fire({
+				type: 'question',
+				title: this.$t('warning_confirm_title'),
+				text: this.$t('warning_confirm_enable_user'),
+				reverseButtons: true,
+				confirmButtonText: this.$t('ok'),
+				showCancelButton: true,
+				cancelButtonText: this.$t('cancel')
+			})
+			.then(async function(e) {
+				if (e.value === true) {
+					self.$store.dispatch('users/enableUser', user)
+					Swal.fire({
+						type: 'success',
+						title: 'Enabled!',
+						text: 'User account successfully enabled!',
+					});
+				} else {
+					console.log('cancelled')
+				}
+			})
+	  	}
+	}
 }
 </script>

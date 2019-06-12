@@ -12,7 +12,8 @@ class BlogController extends Controller
     {
         // make everything require login except index()
         $this->middleware('auth:api')->except(['index', 'show']);
-        $this->middleware('admin:api')->only(['create', 'store', 'edit', 'update', 'delete']);
+        $this->middleware('admin:api')->only(['adminIndex', 'create', 'store', 'edit', 'update', 'delete', 'publish', 'unpublish']);
+        $this->middleware('super:api')->only(['forceDelete']); // permanent delete (removes row from db completely vs flagging as deleted)
 
         //INVERSE Example
         // $this->middleware('auth')->only(['index']);
@@ -46,7 +47,8 @@ class BlogController extends Controller
 
     public function index()
     {
-        return Blog::where('published', true)->get();
+        $blogs = Blog::where('published', true)->get();
+        return response()->json($blogs, 200);
     }
 
     public function show(Blog $blog)
@@ -89,6 +91,18 @@ class BlogController extends Controller
         try 
         {
             $blog->delete();
+            return response()->json(null, 204);
+        }
+        catch (Exception $e) {
+            return response()->json($e->getMessage(), 500);
+        }
+    }
+
+    public function forceDelete(Blog $blog)
+    {
+        try 
+        {
+            $blog->forceDelete();
             return response()->json(null, 204);
         }
         catch (Exception $e) {
