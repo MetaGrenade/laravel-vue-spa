@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // state
 export const state = {
-  blogs: {},
+  blogs: [],
 }
 
 // getters
@@ -19,7 +19,8 @@ export const mutations = {
         return state.blogs = blogs
     },
     DELETE_BLOG(state, blog) {
-        let index = state.blogs.findIndex(item => item.id === blog.id)
+        let index = state.blogs.findIndex(item => item.id == blog.id)
+        console.log(index)
         state.blogs.splice(index, 1)
 	}
 }
@@ -36,16 +37,15 @@ export const actions = {
     },
     fetchBlogs({commit}) {
         axios.get('/api/admin/blogs')
-            .then(res => {
-                commit('FETCH_BLOGS', res.data)
-            }).catch(err => {
-            console.log(err)
-        })
+            .then(r => r.data)
+            .then(blogs => {
+                commit('FETCH_BLOGS', blogs)
+            })
     },
     deleteBlog({commit}, blog) {
         axios.delete(`/api/admin/blogs/${blog.id}`)
             .then(res => {
-                if (res.data === 'ok')
+                if (res.status === 204)
                     commit('DELETE_BLOG', blog)
             }).catch(err => {
             console.log(err)

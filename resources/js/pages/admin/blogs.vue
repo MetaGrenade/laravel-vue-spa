@@ -18,7 +18,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="(blog, index) in blogs" :key="index" :blog="blog">
+					<tr v-for="(blog, index) in blogs.blogs" :key="index" :blog="blog">
 						<td class="text-center align-middle">
 							{{ blog.id }}
 						</td>
@@ -74,25 +74,22 @@ export default {
 
 	data () {
 		return {
-			blogs: {}
+			// blogs: {}
 		}
 	},
 
-	// computed: {
-	// 	...mapState({
-	// 		blogs: 'blogs/fetchBlogs'
-	// 	}),
+	computed: mapState([
+		'blogs'
+	]),
+
+	// created () {
+	// 	// Fill the form with blog data.
+	// 	this.fetchBlogs()
 	// },
 
-	created () {
-		// Fill the form with blog data.
-		this.fetchBlogs()
+	mounted() {
+		this.$store.dispatch('blogs/fetchBlogs')
 	},
-
-	// mounted() {
-	// 	console.log(this.$store)
-	// 	this.$store.dispatch('blogs/fetchBlogs')
-	// },
 
   	methods: {
 		async fetchBlogs () {
@@ -102,7 +99,8 @@ export default {
 			this.blogs = data
 		},
 	  	deleteBlog: async function (blog) {
-		  Swal.fire({
+			var self = this;
+		  	Swal.fire({
 				type: 'question',
 				title: this.$t('warning_confirm_title'),
 				text: this.$t('warning_confirm_delete'),
@@ -113,23 +111,12 @@ export default {
 			})
 			.then(async function(e) {
 				if (e.value === true) {
-					// this.$store.dispatch('blogs/deleteBlog', blog)
-					const { status } = await axios.delete('/api/admin/blogs/'+blog.id)
-					// console.log(status)
-					if(status === 204){
-						Swal.fire({
-							type: 'success',
-							title: 'Deleted!',
-							text: 'Item successfully deleted!',
-						});
-					} 
-					else {
-						Swal.fire({
-							type: 'error',
-							title: this.$t('warning_confirm_title'),
-							text: status + ' Error! Please try again later...',
-						})
-					}
+					self.$store.dispatch('blogs/deleteBlog', blog)
+					Swal.fire({
+						type: 'success',
+						title: 'Deleted!',
+						text: 'Item successfully deleted!',
+					});
 				} else {
 					console.log('cancelled')
 					// swal("Cancelled", "Your imaginary file is safe :)", "error");

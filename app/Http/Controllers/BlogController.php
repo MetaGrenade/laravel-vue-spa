@@ -38,7 +38,7 @@ class BlogController extends Controller
 
         $blogs = array();
         foreach($b as $blog){
-            $blogs['_'.$blog['id']] = $blog;
+            $blogs[] = $blog;
         }
         
         return response()->json($blogs, 200);
