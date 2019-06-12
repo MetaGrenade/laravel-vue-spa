@@ -124,7 +124,8 @@ export default {
 			})
 		},
 		hideBlog: async function(blog) {
-		  Swal.fire({
+			var self = this;
+		  	Swal.fire({
 				type: 'question',
 				title: this.$t('warning_confirm_title'),
 				text: this.$t('warning_confirm_hide'),
@@ -135,29 +136,20 @@ export default {
 			})
 			.then(async function(e) {
 				if (e.value === true) {
-					const { status } = await axios.patch('/api/admin/blogs/'+blog.id+'/unpublish')
-					// console.log(status)
-					if(status === 200){
-						Swal.fire({
-							type: 'success',
-							title: 'Unpublished!',
-							text: 'Item successfully hidden!',
-						});
-					} 
-					else {
-						Swal.fire({
-							type: 'error',
-							title: this.$t('warning_confirm_title'),
-							text: status + ' Error! Please try again later...',
-						})
-					}
+					self.$store.dispatch('blogs/unpublishBlog', blog)
+					Swal.fire({
+						type: 'success',
+						title: 'Unpublished!',
+						text: 'Item successfully unpublished!',
+					});
 				} else {
 					console.log('cancelled')
 				}
 			})
 		},
 		publishBlog: async function(blog) {
-		  Swal.fire({
+			var self = this;
+		  	Swal.fire({
 				type: 'question',
 				title: this.$t('warning_confirm_title'),
 				text: this.$t('warning_confirm_publish'),
@@ -168,27 +160,17 @@ export default {
 			})
 			.then(async function(e) {
 				if (e.value === true) {
-					const { status } = await axios.patch('/api/admin/blogs/'+blog.id+'/publish')
-					// console.log(status)
-					if(status === 200){
-						Swal.fire({
-							type: 'success',
-							title: 'Published!',
-							text: 'Item successfully published!',
-						});
-					} 
-					else {
-						Swal.fire({
-							type: 'error',
-							title: this.$t('warning_confirm_title'),
-							text: status + ' Error! Please try again later...',
-						})
-					}
+					self.$store.dispatch('blogs/publishBlog', blog)
+					Swal.fire({
+						type: 'success',
+						title: 'Published!',
+						text: 'Item successfully published!',
+					});
 				} else {
 					console.log('cancelled')
 				}
 			})
-	  }
-  }
+	  	}
+  	}
 }
 </script>
