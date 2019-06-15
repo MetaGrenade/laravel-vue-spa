@@ -42,8 +42,12 @@ class BlogController extends Controller
         foreach($b as $blog){
             $blogs[] = $blog;
         }
+
+        $results = array(
+            'blogs' => $blogs
+        );
         
-        return response()->json($blogs, 200);
+        return response()->json($results, 200);
     }
 
     public function index()
