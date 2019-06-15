@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Blog;
+use App\BlogCategories;
 
 class BlogController extends Controller
 {
@@ -48,7 +49,12 @@ class BlogController extends Controller
     public function index()
     {
         $blogs = Blog::where('published', true)->get();
-        return response()->json($blogs, 200);
+        $blog_categories = BlogCategories::where('published', true)->get();
+        $results = array(
+            'blogs' => $blogs,
+            'blog_categories' => $blog_categories
+        );
+        return response()->json($results, 200);
     }
 
     public function show(Blog $blog)

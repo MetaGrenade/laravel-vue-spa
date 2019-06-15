@@ -88,7 +88,7 @@ export default {
 	// },
 
 	mounted() {
-		this.$store.dispatch('blogs/fetchBlogs')
+		this.$store.dispatch('blogs/fetchBlogsAdmin')
 	},
 
   	methods: {

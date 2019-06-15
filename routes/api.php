@@ -15,7 +15,16 @@ use Illuminate\Http\Request;
 
 // SUPER-ADMIN ONLY
 Route::group(['middleware' => 'super:api'], function () {
+    // roles
+    Route::get('admin/roles', 'RolesController@index');
+    Route::get('admin/roles/{role}', 'RolesController@show');
+    Route::post('admin/roles', 'RolesController@store');
+    Route::patch('admin/roles/{role}', 'RolesController@update');
+    Route::delete('admin/roles/{role}', 'RolesController@delete');
+    Route::delete('admin/roles/{role}/delete', 'RolesController@forceDelete');
+    //blogs
     Route::delete('admin/blogs/{blog}/delete', 'BlogController@forceDelete');
+    //users
     Route::delete('admin/users/{user}/delete', 'AdminUsersController@forceDelete');
 });
 

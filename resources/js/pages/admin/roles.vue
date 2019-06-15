@@ -15,16 +15,13 @@
             </th>
             <th>Title</th>
             <th class="text-center">
-              Icon Class
+              Access Level
             </th>
             <th class="text-center">
-              Color Class
+              Color (Icon)
             </th>
             <th class="text-center">
-              Users
-            </th>
-            <th class="text-center">
-              Permissions
+              Users / Permissions
             </th>
             <th>Actions</th>
           </tr>
@@ -43,26 +40,20 @@
               </div>
             </td>
 
-            <td class="text-center align-middle">
-              {{ role.icon }}
+			<td class="text-center align-middle">
+              {{ role.access_level }}
             </td>
             <td class="text-center align-middle">
-              {{ role.color }}
+              {{ role.color }} ({{ role.icon }})
             </td>
 
             <td class="text-center align-middle">
               <button class="btn btn-sm btn-secondary">
                 {{ role.member_count }} Members
+              </button> 
+			  <button class="btn btn-sm btn-secondary" v-if="isUserSuperAdmin">
+                {{ role.permission_count }} Permissions
               </button>
-            </td>
-
-            <td v-if="isUserSuperAdmin" class="text-center align-middle">
-              <button class="btn btn-sm btn-secondary">
-                {{ role.member_count }} Permissions
-              </button>
-            </td>
-            <td v-else class="text-center align-middle">
-              {{ role.permission_count }}
             </td>
 
             <td class="align-middle">
@@ -87,128 +78,107 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  scrollToTop: false,
+	scrollToTop: false,
 
-  metaInfo () {
-    return { title: this.$t('admin_roles') }
-  },
+	metaInfo () {
+		return { title: this.$t('admin_roles') }
+	},
 
-  data () {
-    return {
-      roles: [
-        {
-          id: 8,
-          title: 'Super Admin',
-          slug: 'super-admin',
-          icon: 'crown',
-          color: 'text-danger',
-          description: 'Reserved for Developers',
-          permission_count: 52,
-          permissions: {},
-          member_count: 1,
-          members: {}
-        },
-        {
-          id: 7,
-          title: 'Admin',
-          slug: 'admin',
-          icon: 'shield-alt',
-          color: 'text-danger',
-          description: 'High level administrative User!',
-          permission_count: 25,
-          permissions: {},
-          member_count: 2,
-          members: {}
-        },
-        {
-          id: 6,
-          title: 'Moderator',
-          slug: 'moderator',
-          icon: 'star',
-          color: 'text-warning',
-          description: 'Admin User with minimal permissions!',
-          permission_count: 15,
-          permissions: {},
-          member_count: 2,
-          members: {}
-        },
-        {
-          id: 5,
-          title: 'Writer',
-          slug: 'writer',
-          icon: 'newspaper',
-          color: 'text-primary',
-          description: 'Content Creator & Writer!',
-          permission_count: 4,
-          permissions: {},
-          member_count: 3,
-          members: {}
-        },
-        {
-          id: 4,
-          title: 'Partner / Sponsor / Advertiser',
-          slug: 'partner',
-          icon: 'handshake',
-          color: 'text-success',
-          description: 'Reserved for Partners, Sponsors & Advertisers!',
-          permission_count: 5,
-          permissions: {},
-          member_count: 82,
-          members: {}
-        },
-        {
-          id: 3,
-          title: 'VIP',
-          slug: 'vip',
-          icon: 'user-plus',
-          color: 'text-success',
-          description: 'Special User Role, Reserved for !',
-          permission_count: 2,
-          permissions: {},
-          member_count: 11,
-          members: {}
-        },
-        {
-          id: 2,
-          title: 'User',
-          slug: 'user',
-          icon: 'user',
-          color: 'text-dark',
-          description: 'Default User Role!',
-          permission_count: 1,
-          permissions: {},
-          member_count: 125927,
-          members: {}
-        },
-        {
-          id: 1,
-          title: 'Banned',
-          slug: 'banned',
-          icon: 'ban',
-          color: 'text-muted',
-          description: 'Banned Users...',
-          permission_count: 0,
-          permissions: {},
-          member_count: 1,
-          members: {}
-        }
-      ]
-    }
-  },
-  computed: {
-    isUserSuperAdmin () {
-      if (this.user.role === 'super-admin') {
-        return true
-      } else {
-        return false
-      }
-    },
-    ...mapGetters({
-      user: 'auth/user'
-    })
-  },
-  methods: {
-
-  }
+  	data () {
+    	return {}
+	},
+	computed: {
+		isUserSuperAdmin () {
+			if (this.user.role === 'super-admin') {
+				return true
+			} else {
+				return false
+			}
+		},
+		...mapGetters({
+			user: 'auth/user',
+			roles: 'roles/roles'
+		})
+	},
+	mounted() {
+		this.$store.dispatch('roles/fetchRoles')
+	},
+	methods: {
+		
+		disableRole: async function (role) {
+			var self = this;
+		  	Swal.fire({
+				type: 'question',
+				title: this.$t('warning_confirm_title'),
+				text: this.$t('warning_confirm_delete_role'),
+				reverseButtons: true,
+				confirmButtonText: this.$t('delete'),
+				showCancelButton: true,
+				cancelButtonText: this.$t('cancel')
+			})
+			.then(async function(e) {
+				if (e.value === true) {
+					self.$store.dispatch('roles/deleteRole', role)
+					Swal.fire({
+						type: 'success',
+						title: 'Deleted!',
+						text: 'Role successfully deleted!',
+					});
+				} else {
+					console.log('cancelled')
+					// swal("Cancelled", "Your imaginary file is safe :)", "error");
+				}
+			})
+		},
+		enableRole: async function(role) {
+			var self = this;
+		  	Swal.fire({
+				type: 'question',
+				title: this.$t('warning_confirm_title'),
+				text: this.$t('warning_confirm_enable_role'),
+				reverseButtons: true,
+				confirmButtonText: this.$t('ok'),
+				showCancelButton: true,
+				cancelButtonText: this.$t('cancel')
+			})
+			.then(async function(e) {
+				if (e.value === true) {
+					self.$store.dispatch('roles/enableRole', role)
+					Swal.fire({
+						type: 'success',
+						title: 'Enabled!',
+						text: 'Role successfully enabled!',
+					});
+				} else {
+					console.log('cancelled')
+				}
+			})
+	  	},
+		deleteRole: async function (role) {
+			var self = this;
+		  	Swal.fire({
+				type: 'question',
+				title: this.$t('warning_confirm_title'),
+				text: this.$t('warning_confirm_delete_user'),
+				reverseButtons: true,
+				confirmButtonText: this.$t('delete'),
+				showCancelButton: true,
+				cancelButtonText: this.$t('cancel')
+			})
+			.then(async function(e) {
+				if (e.value === true) {
+					self.$store.dispatch('roles/forceDeleteRole', role)
+					Swal.fire({
+						type: 'success',
+						title: 'Deleted!',
+						text: 'Role successfully deleted!',
+					});
+				} else {
+					console.log('cancelled')
+					// swal("Cancelled", "Your imaginary file is safe :)", "error");
+				}
+			})
+		}
+	}
 }
 </script>

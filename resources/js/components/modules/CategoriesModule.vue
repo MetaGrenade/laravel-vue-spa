@@ -5,9 +5,11 @@
     </h5>
     <div class="card-body">
       <div class="row">
-        <div v-for="(category, index) in categories" :key="index" class="col-12 col-lg-6">
-          <a href="#">{{ category.name }}</a>
-        </div>
+        <ul>
+          <li v-for="(category, index) in blog_categories" :key="index">
+            <a href="#">{{ category.title }}</a>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -18,12 +20,7 @@ export default {
   components: {
 
   },
-  props: {
-    categories: {
-      type: Array,
-      required: true
-    }
-  },
+  props: ['blog_categories'],
   //   middleware: 'auth',
   data () {
     return {

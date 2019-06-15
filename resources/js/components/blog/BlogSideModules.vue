@@ -1,10 +1,10 @@
 <template>
-  <div class="col-md-4 order-1 order-md-2">
+  <div class="col-md-4 col-lg-3 order-1 order-md-2">
     <!-- Search Widget -->
     <SearchModule :model="'Blog'" />
 
     <!-- Categories Widget -->
-    <CategoriesModule :categories="categories" />
+    <CategoriesModule v-bind:blog_categories="blog_categories" />
 
     <!-- Side Widget -->
     <div class="card my-4">
@@ -27,39 +27,12 @@ export default {
     SearchModule,
     CategoriesModule
   },
-  props: {
-
-  },
+  props: 
+    ['blog_categories']
+  ,
   //   middleware: 'auth',
   data () {
-    return {
-      categories: [
-        { 
-          name: 'Cat One', 
-          url: '#' 
-        },
-        { 
-          name: 'Cat Two', 
-          url: '#' 
-        },
-        { 
-          name: 'Cat Three', 
-          url: '#' 
-          },
-        { 
-          name: 'Cat Four', 
-          url: '#' 
-        },
-        { 
-          name: 'Cat Five', 
-          url: '#' 
-        },
-        { 
-          name: 'Cat Six', 
-          url: '#' 
-        }
-      ]
-    }
+    return {}
   },
   computed: {
 

@@ -3,11 +3,13 @@ import axios from 'axios'
 // state
 export const state = {
   blogs: [],
+  blog_categories: [],
 }
 
 // getters
 export const getters = {
   blogs: state => state.blogs,
+  blog_categories: state => state.blogs.blog_categories,
 }
 
 // mutations
@@ -16,7 +18,10 @@ export const mutations = {
         state.blogs.unshift(blog)
     },
     FETCH_BLOGS(state, blogs) {
-        return state.blogs = blogs
+        return state.blogs = blogs.blogs
+    },
+    FETCH_BLOG_CATEGORIES(state, blogs) {
+        return state.blog_categories = blogs.blog_categories
     },
     DELETE_BLOG(state, blog) {
         let index = state.blogs.findIndex(item => item.id == blog.id)
@@ -51,11 +56,19 @@ export const actions = {
                 console.log(err)
             })
     },
-    fetchBlogs({commit}) {
+    fetchBlogsAdmin({commit}) {
         axios.get('/api/admin/blogs')
             .then(r => r.data)
             .then(blogs => {
                 commit('FETCH_BLOGS', blogs)
+            })
+    },
+    fetchPublishedBlogs({commit}) {
+        axios.get('/api/blogs')
+            .then(r => r.data)
+            .then(blogs => {
+                commit('FETCH_BLOGS', blogs)
+                commit('FETCH_BLOG_CATEGORIES', blogs)
             })
     },
     deleteBlog({commit}, blog) {

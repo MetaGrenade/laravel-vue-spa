@@ -48,6 +48,13 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     protected $appends = [
         'photo_url',
     ];
+    
+
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role', 'user_has_role', 'user_id', 'role_id');
+    }
+
 
     /**
      * Get the profile photo URL attribute.
