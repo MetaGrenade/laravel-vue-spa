@@ -32,7 +32,7 @@ Route::group(['middleware' => 'super:api'], function () {
 Route::group(['middleware' => 'admin:api'], function () {
     // blogs
     Route::get('admin/blogs', 'BlogController@adminIndex');
-    Route::get('admin/blogs/{blog}', 'BlogController@show');
+    Route::get('admin/blogs/{blog}', 'BlogController@edit');
     Route::post('admin/blogs', 'BlogController@store');
     Route::patch('admin/blogs/{blog}', 'BlogController@update');
     Route::patch('admin/blogs/{blog}/publish', 'BlogController@publish');

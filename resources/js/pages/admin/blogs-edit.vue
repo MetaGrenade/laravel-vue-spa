@@ -28,8 +28,7 @@
 						<label for="category_id">Category:</label>
 						<select v-model="form.category_id" :class="{ 'is-invalid': form.errors.has('category') }" name="category_id" class="form-control" id="category_id">
 							<option value="" disabled>- Select A Category -</option>
-							<option value="1">Cat 1</option>
-							<option value="2">Cat 2</option>
+							<option v-for="(category, index) in blog_categories" v-bind:category="category" :key="index" v-bind:value="category.id">{{ category.title }}</option>
 						</select>
 						<has-error :form="form" field="category"></has-error>
 					</div>
@@ -108,7 +107,8 @@ export default {
 				intro: '',
 				content: '',
 			}),
-			previewImage: ''
+			previewImage: '',
+			blog_categories: []
 		}
 	},
 
@@ -126,10 +126,11 @@ export default {
 			// get blog data from store or api ?
 			await axios.get('/api/admin/blogs/' + this.$route.params.id)
 				.then(response => {
-					console.log(response)
+					// console.log(response)
 					this.form.keys().forEach(key => {
-						this.form[key] = response.data[key]
+						this.form[key] = response.data.blog[key]
 					})
+					this.blog_categories = response.data.blog_categories
 				});
 		},
 		onFileChange(e) {

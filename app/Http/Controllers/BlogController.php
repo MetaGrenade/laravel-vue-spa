@@ -75,12 +75,17 @@ class BlogController extends Controller
         return response()->json($blog, 201);
     }
 
-    // public function update(Request $request, Blog $blog)
-    // {
-    //     $blog->update($request->all());
+    public function edit(Blog $blog)
+    {
+        $blog_categories = BlogCategories::where('published', true)->get();
 
-    //     return response()->json($blog, 200);
-    // }
+        $results = array(
+            'blog' => $blog,
+            'blog_categories' => $blog_categories
+        );
+
+        return response()->json($results, 200);
+    }
 
     public function update(Request $request, Blog $blog)
     {
