@@ -18,10 +18,10 @@ export const mutations = {
         state.blogs.unshift(blog)
     },
     FETCH_BLOGS(state, blogs) {
-        return state.blogs = blogs.blogs
+        return state.blogs = blogs
     },
-    FETCH_BLOG_CATEGORIES(state, blogs) {
-        return state.blog_categories = blogs.blog_categories
+    FETCH_BLOG_CATEGORIES(state, categories) {
+        return state.blog_categories = categories
     },
     DELETE_BLOG(state, blog) {
         let index = state.blogs.findIndex(item => item.id == blog.id)
@@ -60,15 +60,15 @@ export const actions = {
         axios.get('/api/admin/blogs')
             .then(r => r.data)
             .then(blogs => {
-                commit('FETCH_BLOGS', blogs)
+                commit('FETCH_BLOGS', blogs.blogs)
             })
     },
     fetchPublishedBlogs({commit}) {
         axios.get('/api/blogs')
             .then(r => r.data)
             .then(blogs => {
-                commit('FETCH_BLOGS', blogs)
-                commit('FETCH_BLOG_CATEGORIES', blogs)
+                commit('FETCH_BLOGS', blogs.blogs)
+                commit('FETCH_BLOG_CATEGORIES', blogs.blog_categories)
             })
     },
     deleteBlog({commit}, blog) {
