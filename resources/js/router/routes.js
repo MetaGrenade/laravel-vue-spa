@@ -35,6 +35,7 @@ export default [
       { path: 'roles', name: 'admin.roles', component: page('admin/roles.vue') },
       { path: 'users', name: 'admin.users', component: page('admin/users.vue') },
       { path: 'blogs/edit/:id', name: 'admin.blogs.edit', component: page('admin/blogs-edit.vue') },
+      { path: 'blogs/create', name: 'admin.blogs.create', component: page('admin/blogs-create.vue') },
       { path: 'blogs', name: 'admin.blogs', component: page('admin/blogs.vue') },
     ]
   },

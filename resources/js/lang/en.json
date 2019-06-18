@@ -30,6 +30,8 @@
   "blog": "Blog",
   "blog_edit": "Edit Blog",
   "blog_updated": "Blog Successfully Updated!",
+  "blog_create": "Create New Blog",
+  "blog_created": "Blog Post Successfully Created!",
   "blogs": "Blogs",
   "dashboard": "Dashboard",
   "user": "User",
@@ -61,5 +63,6 @@
   "resend_verification_link": "Resend Verification Link ?",
   "failed_to_verify_email": "Failed to verify email.",
   "verify_email_address": "We sent you an email with an the verification link.",
-  "save_update": "Save / Update"
+  "save_update": "Save / Update",
+  "save_create": "Save / Create"
 }

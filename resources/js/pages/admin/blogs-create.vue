@@ -1,27 +1,27 @@
 <template>
 	<div class="row">
 		<div class="col-12">
-			<form @submit.prevent="update" @keydown="form.onKeydown($event)" enctype="multipart/form-data">
-      			<alert-success :form="form" :message="$t('blog_updated')" />
+			<form @submit.prevent="create" @keydown="form.onKeydown($event)" enctype="multipart/form-data">
+      			<alert-success :form="form" :message="$t('blog_created')" />
 				<div class="row">
 					<div class="form-group col-6">
-						<h1>Edit Blog</h1>
+						<h1>Create Blog</h1>
 					</div>
 					<div class="form-group col-6 pt-2 text-right">
 						<!-- Submit Button -->
 						<v-button :loading="form.busy" type="success">
-							{{ $t('save_update') }}
+							{{ $t('save_create') }}
 						</v-button>
 					</div>
 					<hr />
 					<div class="form-group col-12 col-lg-6">
 						<label for="title">Title:</label>
-						<input v-model="form.title" :class="{ 'is-invalid': form.errors.has('title') }" type="text" class="form-control" id="title">
+						<input v-model="form.title" :class="{ 'is-invalid': form.errors.has('title') }" type="text" class="form-control" id="title" placeholder="Catchy Title Here">
 						<has-error :form="form" field="title"></has-error>
 					</div>
 					<div class="form-group col-12 col-lg-6">
 						<label for="seo_url">SLUG: <small>(SEO URL)</small></label>
-						<input v-model="form.slug" :class="{ 'is-invalid': form.errors.has('slug') }" type="text" class="form-control" id="slug" placeholder="unique_slug">
+						<input v-model="form.slug" :class="{ 'is-invalid': form.errors.has('slug') }" type="text" class="form-control" id="slug" placeholder="unique-seo-friedly-url-text">
 						<has-error :form="form" field="slug"></has-error>
 					</div>
 					<div class="form-group col-12 col-lg-6">
@@ -36,16 +36,15 @@
 						<label for="title">Published:</label>
 						<select v-model="form.published" :class="{ 'is-invalid': form.errors.has('published') }" name="published" class="form-control" id="published">
 							<option value="">- Select Status -</option>
-							<option value="1">Published</option>
-							<option value="0">Draft</option>
+							<option value="true">Published</option>
+							<option value="false">Draft</option>
 						</select>
 						<has-error :form="form" field="published"></has-error>
 					</div>
 					
 					<div class="form-group col-12">
-						<label for="image">Image: <small v-if="form.image !== null" class="text-muted">Current = {{ form.image }}</small></label>
+						<label for="image">Image:</label>
 						<input type="file" name="image" class="form-control" ref="fileUpload" v-on:change="onFileChange">
-						<small id="imageHelp" class="form-text text-muted">Selecting a new image will override the image listed above!</small>
 						<has-error :form="form" field="image"></has-error>
 						<div class="text-center bg-dark p-4 my-3 overflow-hidden rounded border-secondary" v-if="previewImage">
 							<p><strong class="text-secondary">Image Preview:</strong></p>
@@ -67,7 +66,7 @@
 					<div class="col-12 text-right">
 						<!-- Submit Button -->
 						<v-button :loading="form.busy" type="success">
-							{{ $t('save_update') }}
+							{{ $t('save_create') }}
 						</v-button>
 					</div>
 				</div>
@@ -94,7 +93,7 @@ export default {
 	scrollToTop: false,
 
 	metaInfo () {
-			return { title: this.$t('blog_edit') }
+			return { title: this.$t('blog_create') }
 	},
 
 	data () {
@@ -102,7 +101,7 @@ export default {
 			form: new Form({
 				title: null,
 				slug: null,
-				category_id: null,
+				category_id: '',
 				published: false,
 				image: null,
 				intro: null,
@@ -159,34 +158,30 @@ export default {
 
 			this.previewImage = '';
 		}, 
-		async update () {
+		async create () {
 			// Submit the form via a POST request
-			await this.form.patch('/api/admin/blogs/'+this.$route.params.id)
+			await this.form.post('/api/admin/blogs')
 				.then((response)=>{
 					console.log(response)
 					// return response.json()
 					if(response.status === 200){
 						Swal.fire({
 							type: 'success',
-							title: 'Updated!',
-							text: 'Blog Post Successfully Updated!',
-						});
+							title: 'Created!',
+							text: 'Blog Post Successfully Created!',
+                        });
+                        
+                        // Update the blog Store.
+                        // await this.$store.dispatch('updateBlog', { blog: response.data })
+
+                        this.form.reset()
 					}
 				})
-				// .then(({ data }) => {
-				// 	console.log(data) 
-				// 	alert('YAY')
-					
-				// 	// Update the blog Store.
-				// 	// await this.$store.dispatch('updateBlog', { blog: data })
-					
-				// 	this.form.reset()
-				// })
 				.catch(error => {
 					console.log(error)
 				});
 
-			// this.$router.push({ name: 'home' })
+			// this.$router.push({ name: 'admin.blogs' })
 			// this.form.reset()
 		}
 	}

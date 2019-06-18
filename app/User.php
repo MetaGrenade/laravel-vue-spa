@@ -48,7 +48,12 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     protected $appends = [
         'photo_url',
     ];
+
     
+    public function blogs()
+    {
+        return $this->belongsToMany('App\Blog');
+    }    
 
     public function roles()
     {

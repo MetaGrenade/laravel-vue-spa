@@ -63,7 +63,14 @@ class BlogController extends Controller
 
     public function show(Blog $blog)
     {
-        return response()->json($blog, 200);
+        $results = array(
+            'blog' => $blog,
+            'author' => $blog->author(),
+            'related_blogs' => array(),
+            'recently_posted_blogs' => array(),
+        );
+
+        return response()->json($results, 200);
     }
 
     public function store(Request $request)
@@ -77,7 +84,7 @@ class BlogController extends Controller
 
     public function edit(Blog $blog)
     {
-        $blog_categories = BlogCategories::where('published', true)->get();
+        $blog_categories = BlogCategories::all();
 
         $results = array(
             'blog' => $blog,

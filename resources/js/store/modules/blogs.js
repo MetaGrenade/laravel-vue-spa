@@ -2,18 +2,23 @@ import axios from 'axios'
 
 // state
 export const state = {
-  blogs: [],
-  blog_categories: [],
+    blog: [],
+    blogs: [],
+    blog_categories: [],
 }
 
 // getters
 export const getters = {
-  blogs: state => state.blogs,
-  blog_categories: state => state.blogs.blog_categories,
+    blog: state => state.blog,
+    blogs: state => state.blogs,
+    blog_categories: state => state.blogs.blog_categories,
 }
 
 // mutations
 export const mutations = {
+    FETCH_BLOG(state, blog) {
+        return state.blog = blog
+    },
 	CREATE_BLOG(state, blog) {
         state.blogs.unshift(blog)
     },
@@ -48,6 +53,15 @@ export const mutations = {
 
 // actions
 export const actions = {
+    fetchBlog({commit}, blog) {
+        axios.delete(`/api/blogs/${blog.id}`)
+            .then(res => {
+                if (res.status === 200)
+                    commit('FETCH_BLOG', res.data.blog)
+            }).catch(err => {
+                console.log(err)
+            })
+	},
 	createBlog({commit}, blog) {
         axios.post('/api/admin/blogs', blog)
             .then(res => {

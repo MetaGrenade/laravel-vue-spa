@@ -2,7 +2,7 @@
   	<div class="row">
 		<div class="col-12">
 			<h1>
-				Blog Management <button class="btn btn-success"><fa :icon="'plus'" fixed-width /> Create Blog</button>
+				Blog Management <router-link :to="{ name: 'admin.blogs.create' }"><button class="btn btn-success"><fa :icon="'plus'" fixed-width /> Create Blog</button></router-link>
 			</h1>
 			<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolor molestiae et adipisci minima fugiat possimus. Rem quos animi nisi, quod consequatur nemo accusantium quidem magnam officia veniam, voluptas dicta saepe.</p>
 			<table class="table table-striped table-hover table-bordered">
