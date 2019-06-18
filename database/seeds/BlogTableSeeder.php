@@ -22,7 +22,7 @@ class BlogTableSeeder extends Seeder
             $title = $faker->sentence;
             $slug = Str::slug($title);
             Blog::create([
-                'user_id' =>  $faker->randomDigit,
+                'user_id' =>  1,
                 'title' => $title,
                 'slug' => $slug,
                 'category_id' => $faker->numberBetween($min = 1, $max = 10),

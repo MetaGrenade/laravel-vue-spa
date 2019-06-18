@@ -52,7 +52,7 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     
     public function blogs()
     {
-        return $this->belongsToMany('App\Blog');
+        return $this->hasMany('App\Blog');
     }    
 
     public function roles()

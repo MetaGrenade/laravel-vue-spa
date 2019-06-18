@@ -15,7 +15,7 @@
 		</div>
 
 		<!-- Sidebar Widgets Column -->
-		<BlogViewSideModules />
+		<BlogViewSideModules :author="author"/>
 	</div>
 </template>
 
@@ -36,7 +36,8 @@ export default {
 	data () {
 		return {
             blog: {},
-            blog_categories: []
+						author: {},
+						blog_categories: [],
         }
 	},
 	metaInfo () {
@@ -57,10 +58,11 @@ export default {
 	methods: {
         getBlog: async function() {
 			// get blog data from store or api ?
-			await axios.get('/api/blogs/' + this.$route.params.id)
+			await axios.get('/api/blogs/' + this.$route.params.slug)
 				.then(response => {
 					// console.log(response)
 					this.blog = response.data.blog
+					this.author = response.data.author
 					this.blog_categories = response.data.blog_categories
 					// console.log(this.form)
 				});

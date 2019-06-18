@@ -61,11 +61,13 @@ class BlogController extends Controller
         return response()->json($results, 200);
     }
 
-    public function show(Blog $blog)
+    public function show($slug)
     {
+        $blog = Blog::where('slug', $slug)->first();
+        
         $results = array(
             'blog' => $blog,
-            'author' => $blog->author(),
+            'author' => $blog->user,
             'related_blogs' => array(),
             'recently_posted_blogs' => array(),
         );

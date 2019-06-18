@@ -54,7 +54,7 @@ export const mutations = {
 // actions
 export const actions = {
     fetchBlog({commit}, blog) {
-        axios.delete(`/api/blogs/${blog.id}`)
+        axios.delete(`/api/blogs/${blog.slug}`)
             .then(res => {
                 if (res.status === 200)
                     commit('FETCH_BLOG', res.data.blog)

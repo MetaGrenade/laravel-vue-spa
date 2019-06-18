@@ -23,7 +23,7 @@
 							{{ blog.id }}
 						</td>
 						<td class="align-middle">
-							<router-link :to="{ name: 'blog.view', params: { 'id': blog.id } }">
+							<router-link :to="{ name: 'blog.view', params: { 'slug': blog.slug } }">
 								{{ blog.title }}
 							</router-link>
 							<div>
