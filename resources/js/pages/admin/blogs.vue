@@ -34,7 +34,7 @@
 							John Doe
 						</td>
 						<td :class="{ 'text-success': blog.published, 'text-danger': !blog.published, 'align-middle': true === true }">
-							21 Hours Ago
+							{{ blog.created_at }}
 						</td>
 						<td class="align-middle">
 							<router-link :to="{ name: 'admin.blogs.edit', params: { id: blog.id } }">

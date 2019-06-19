@@ -8,9 +8,7 @@
 
 			<div class="row">
 				<!-- Blog Post -->
-				<div class="col-12">
-					{{ blog.content }}
-				</div>
+				<div class="col-12" v-html="blog.content" />
 			</div>
 		</div>
 
@@ -52,11 +50,11 @@ export default {
 	// 	this.$store.dispatch('blogs/fetchBlog')
     // },
     created() {
-		// Fill the form with blog data from API or STORE.
-		this.getBlog()
+			// Fill the form with blog data from API or STORE.
+			this.getBlog()
     },
 	methods: {
-        getBlog: async function() {
+    getBlog: async function() {
 			// get blog data from store or api ?
 			await axios.get('/api/blogs/' + this.$route.params.slug)
 				.then(response => {

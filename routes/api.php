@@ -80,5 +80,6 @@ Route::group(['middleware' => 'guest:api'], function () {
 //////////////////
 
 // Blogs
+Route::get('blogs/categories', 'BlogController@categories');
 Route::get('blogs', 'BlogController@index');
 Route::get('blogs/{blog}', 'BlogController@show');

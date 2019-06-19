@@ -36,7 +36,7 @@ class BlogController extends Controller
     //
     public function adminIndex()
     {
-        $b = Blog::all();
+        $b = Blog::orderBy('id', 'DESC')->get();
 
         $blogs = array();
         foreach($b as $blog){
@@ -78,6 +78,7 @@ class BlogController extends Controller
     public function store(Request $request)
     {
         $data = self::formValidation($request);
+        $data['user_id'] = $request->user()->id;
 
         $blog = Blog::create($data);
 
@@ -146,14 +147,22 @@ class BlogController extends Controller
         return response()->json($blog, 200);
     }
 
-    function formValidation($data, $blog)
+    public function categories()
+    {
+        $blog_categories = BlogCategories::where('published', true)->get();
+        $results = array(
+            'blog_categories' => $blog_categories
+        );
+        return response()->json($results, 200);
+    }
+
+    function formValidation($data)
     {
         $validated = $this->validate($data, [
-            'user_id' => 'required',
             'title' => 'required',
-            'slug' => 'required|unique:blogs,slug,'.$blog->id,
+            'slug' => 'required|unique:blogs,slug',
             'category_id' => 'required|integer',
-            'published' => 'required|integer',
+            'published' => 'required',
             'image' => 'nullable|image|mimes:jpeg,bmp,png,jpg,svg|max:2048',
             'intro' => 'required|min:50|max:500',
             'content' => 'required',

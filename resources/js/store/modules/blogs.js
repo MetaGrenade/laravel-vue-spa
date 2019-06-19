@@ -85,6 +85,13 @@ export const actions = {
                 commit('FETCH_BLOG_CATEGORIES', blogs.blog_categories)
             })
     },
+    fetchBlogCategories({commit}) {
+        axios.get('/api/blogs/categories')
+            .then(r => r.data)
+            .then(blogs => {
+                commit('FETCH_BLOG_CATEGORIES', blogs.blog_categories)
+            })
+    },
     deleteBlog({commit}, blog) {
         axios.delete(`/api/admin/blogs/${blog.id}`)
             .then(res => {

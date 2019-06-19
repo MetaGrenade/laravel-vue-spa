@@ -85,8 +85,9 @@
 </template>
 
 <script>
-import { Form, HasError, AlertError } from 'vform'
 import axios from 'axios'
+import { mapState } from 'vuex'
+import { Form, HasError, AlertError } from 'vform'
 import Swal from 'sweetalert2'
 
 export default {
@@ -113,23 +114,20 @@ export default {
 	},
 
 	computed: {
-		
+
 	},
 
-	created () {
+	created() {
 		// Fill the form with blog data from API or STORE.
-		this.getBlog()
-	},
+		this.getBlogCategories()
+    },
 
 	methods: {
-		getBlog: async function() {
+		getBlogCategories: async function() {
 			// get blog data from store or api ?
-			await axios.get('/api/admin/blogs/' + this.$route.params.id)
+			await axios.get('/api/blogs/categories')
 				.then(response => {
 					// console.log(response)
-					this.form.keys().forEach(key => {
-						this.form[key] = response.data.blog[key]
-					})
 					this.blog_categories = response.data.blog_categories
 					// console.log(this.form)
 				});
