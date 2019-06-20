@@ -9,9 +9,7 @@
 
 			<div class="row">
 				<!-- Blog Post -->
-				<div class="col-12 card-columns">
-					<BlogCard v-for="(blog, index) in blogs.blogs" :key="index" :blog="blog" />
-				</div>
+				<BlogCard v-for="(blog, index) in blogs.blogs" :key="index" :blog="blog" />
 			</div>
 
 			<!-- Pagination -->

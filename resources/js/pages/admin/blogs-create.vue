@@ -162,7 +162,7 @@ export default {
 				.then((response)=>{
 					console.log(response)
 					// return response.json()
-					if(response.status === 200){
+					if(response.status === 201){
 						Swal.fire({
 							type: 'success',
 							title: 'Created!',
