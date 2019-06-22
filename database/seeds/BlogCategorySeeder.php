@@ -13,7 +13,7 @@ class BlogCategorySeeder extends Seeder
     public function run()
     {
         // Let's truncate our existing records to start from scratch.
-        BlogCategories::truncate();
+        // BlogCategories::truncate();
 
         $faker = \Faker\Factory::create();
 

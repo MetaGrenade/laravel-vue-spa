@@ -52,8 +52,13 @@ class BlogController extends Controller
 
     public function index()
     {
-        $blogs = Blog::where('published', true)->get();
+        $blogs = Blog::with('category', 'user')->where('published', true)->orderBy('id', 'DESC')->get();
         $blog_categories = BlogCategories::where('published', true)->get();
+        foreach($blogs as $blog){
+            // $blog->category = BlogCategories::where('id', $blog->category_id)->first();
+            $blog->year = $blog->created_at->format('Y');
+            $blog->month = $blog->created_at->format('m');
+        }
         $results = array(
             'blogs' => $blogs,
             'blog_categories' => $blog_categories

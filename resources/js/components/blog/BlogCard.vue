@@ -3,20 +3,20 @@
   <div class="col-12 col-lg-6">
     
     <div class="card mb-4">
-      <router-link :to="{ name: 'blog.view', params: { 'slug': blog.slug } }">
+      <router-link :to="{ name: 'blog.view', params: { 'category': blog.category.slug, 'year': blog.year, 'month': blog.month, 'slug': blog.slug } }">
         <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
       </router-link>
       <div class="card-body">
         <h2 class="card-title">
           {{ blog.id }}
-          <router-link :to="{ name: 'blog.view', params: { 'slug': blog.slug } }">
+          <router-link :to="{ name: 'blog.view', params: { 'category': blog.category.slug, 'year': blog.year, 'month': blog.month, 'slug': blog.slug } }">
             {{ blog.title }}
           </router-link>
         </h2>
         <p class="card-text">
           {{ blog.intro }}
         </p>
-        <router-link :to="{ name: 'blog.view', params: { 'slug': blog.slug } }">
+        <router-link :to="{ name: 'blog.view', params: { 'category': blog.category.slug, 'year': blog.year, 'month': blog.month, 'slug': blog.slug } }">
           <button class="btn btn-primary">Read More &rarr;</button>
         </router-link>
       </div>

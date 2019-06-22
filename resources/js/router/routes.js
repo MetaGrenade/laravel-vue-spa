@@ -15,7 +15,8 @@ export default [
   { path: '/home', name: 'home', component: page('home.vue') },
 
   { path: '/blog', name: 'blog', component: page('blog.vue') },
-  { path: '/blog/:slug', name: 'blog.view', component: page('blog-view.vue') },
+  // { path: '/blog/:slug', name: 'blog.view', component: page('blog-view.vue') },
+  { path: '/blog/:category/:year/:month/:slug', name: 'blog.view', component: page('blog-view.vue') },
   // { path: '/blog/:', name: 'blog.view', component: page('blog.vue') },
 
   { path: '/settings',

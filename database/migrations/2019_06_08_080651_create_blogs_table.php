@@ -19,7 +19,8 @@ class CreateBlogsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->unique()->unsigned();
             $table->string('title')->default(NULL)->nullable();
             $table->string('slug')->unique();
-            $table->integer('category_id')->default(NULL)->nullable();
+            $table->bigInteger('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('blog_categories')->onDelete('cascade')->unsigned();
             $table->boolean('published')->default(false);
             $table->string('image')->default(NULL)->nullable();
             $table->text('intro')->default(NULL)->nullable();
