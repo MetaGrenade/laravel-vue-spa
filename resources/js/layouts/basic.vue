@@ -1,5 +1,6 @@
 <template>
-  <div class="basic-layout d-flex align-items-center justify-content-center m-0 bg-white">
+  <div class="basic-layout d-flex m-0 p-4 bg-white">
+    <!--  d-flex align-items-center justify-content-center -->
     <child />
   </div>
 </template>
@@ -13,7 +14,7 @@ export default {
 <style lang="scss">
 .basic-layout {
   color: #636b6f;
-  height: 100vh;
+  min-height: 100vh;
   font-weight: 100;
   position: relative;
 
