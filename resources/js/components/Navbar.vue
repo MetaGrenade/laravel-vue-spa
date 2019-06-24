@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid px-0">
-      <router-link :to="{ name: user ? 'home' : 'welcome' }" class="navbar-brand">
+      <router-link :to="{ name: user ? 'welcome' : 'welcome' }" class="navbar-brand">
         {{ appName }}
       </router-link>
 
@@ -32,9 +32,17 @@
           <!-- Authenticated -->
           <div @click="offcanvas">
             <router-link v-if="user && isUserAdmin" :to="{ name: 'admin.dashboard' }" tag="li">
-              <a class="nav-link text-danger" href="#">
+              <a class="nav-link text-orange" href="#">
                 <fa icon="shield-alt" fixed-width />
                 {{ $t('admin') }}
+              </a>
+            </router-link>
+          </div>
+          <div @click="offcanvas">
+            <router-link v-if="user" :to="{ name: 'home' }" tag="li">
+              <a class="nav-link text-primary" href="#">
+                <fa icon="home" fixed-width />
+                {{ $t('home') }}
               </a>
             </router-link>
           </div>

@@ -1,9 +1,14 @@
 <template>
   <div class="container">
     <div class="top-right links">
+      <router-link :to="{ name: 'documentation' }">
+        <a class="text-orange">
+        <fa :icon="'book'" fixed-width/> {{ $t('documentation') }}
+        </a>
+      </router-link>
       <template v-if="authenticated">
         <router-link :to="{ name: 'home' }">
-          {{ $t('home') }}
+          <fa :icon="'home'" fixed-width/> {{ $t('home') }}
         </router-link>
       </template>
       <template v-else>
@@ -35,7 +40,7 @@
           <a class="btn btn-light border-primary text-primary mb-2" href="https://github.com/metagrenade/laravel-vue-spa">
             View on GitHub <fa :icon="['fab', 'github']" fixed-width/>
           </a>
-          <a href="https://join.slack.com/t/metagrenade/shared_invite/enQtNjc1MjQ0ODc4OTE5LTNhM2RlN2M5NmM2ODBjOTYwY2Q4ZTljYjYwZmY4NTMzZWMzNDZkY2YxMzk2NTNlNTZmNmY3ZTEzZmE3YmQyM2M" class="btn btn-light btn-slack mb-2"><fa :icon="['fab', 'slack']" fixed-width/> Join Slack Community</a>
+          <a href="https://join.slack.com/t/metagrenade/shared_invite/enQtNjc1MjQ0ODc4OTE5LTNhM2RlN2M5NmM2ODBjOTYwY2Q4ZTljYjYwZmY4NTMzZWMzNDZkY2YxMzk2NTNlNTZmNmY3ZTEzZmE3YmQyM2M" class="btn btn-light btn-slack mb-2">Join Slack Community <fa :icon="['fab', 'slack']" fixed-width/></a>
         </div>
         <div class="col-12 links mb-4">
           <a href="https://github.com/metagrenade/laravel-vue-spa" class="text-primary">github.com/metagrenade/laravel-vue-spa</a>
@@ -64,6 +69,10 @@
                 <span class="badge badge-primary badge-pill">8.11.2</span>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="https://vue-meta.nuxtjs.org/" target="_blank">Vue Meta</a>
+                <span class="badge badge-primary badge-pill">1.6.0</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
                 <a href="https://eslint.org/" target="_blank">ESlint</a>
                 <span class="badge badge-primary badge-pill">5.16.0</span>
               </li>
@@ -82,6 +91,10 @@
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 <a href="https://github.com/laravel/socialite" target="_blank">Socialite</a>
                 <span class="badge badge-primary badge-pill">4.0</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="https://sweetalert2.github.io/" target="_blank">Sweet Alert 2</a>
+                <span class="badge badge-primary badge-pill">8.12.1</span>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 <a href="https://getbootstrap.com/docs/4.3/getting-started/introduction/" target="_blank">Bootstrap</a>
@@ -158,28 +171,6 @@ export default {
   position: absolute;
   right: 10px;
   top: 18px;
-}
-
-.btn-slack {
-  border-color: #4a154b !important;
-  color: #4a154b !important;
-  &:hover {
-    background-color: #4a154b !important;
-    color: #fff !important;
-  }
-}
-
-.text-orange {
-  color: #ee540e !important;
-}
-
-.btn-orange {
-  border-color: #ee540e !important;
-  color: #ee540e !important;
-  &:hover {
-    background-color: #ee540e !important;
-    color: #fff !important;
-  }
 }
 
 h1 {

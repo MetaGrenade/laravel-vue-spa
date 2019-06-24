@@ -64,5 +64,7 @@
   "failed_to_verify_email": "Failed to verify email.",
   "verify_email_address": "We sent you an email with an the verification link.",
   "save_update": "Save / Update",
-  "save_create": "Save / Create"
+  "save_create": "Save / Create",
+  "documentation": "Documenatation",
+  "documentation_welcome": "Some Welcome Text for the documentation page needs to go here..."
 }

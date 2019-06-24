@@ -23,3 +23,21 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(359deg); }
 }
+
+.btn-slack {
+  border-color: #4a154b !important;
+  color: #4a154b !important;
+  &:hover {
+    background-color: #4a154b !important;
+    color: #fff !important;
+  }
+}
+
+.btn-orange {
+  border-color: #ee540e !important;
+  color: #ee540e !important;
+  &:hover {
+    background-color: #ee540e !important;
+    color: #fff !important;
+  }
+}

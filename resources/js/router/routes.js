@@ -17,6 +17,8 @@ export default [
 // BLOG
   { path: '/blog', name: 'blog', component: page('blog.vue') },
   { path: '/blog/:category/:year/:month/:slug', name: 'blog.view', component: page('blog-view.vue') },
+// Documentation
+  { path: '/documentation', name: 'documentation', component: page('documentation.vue')},
 // USER PROFILE
   { path: '/settings',
     component: page('settings/index.vue'),

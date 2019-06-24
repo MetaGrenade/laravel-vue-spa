@@ -36,10 +36,12 @@ class BlogController extends Controller
     //
     public function adminIndex()
     {
-        $b = Blog::orderBy('id', 'DESC')->get();
+        $b = Blog::with('category', 'user')->orderBy('id', 'DESC')->get();
 
         $blogs = array();
         foreach($b as $blog){
+            $blog->year = $blog->created_at->format('Y');
+            $blog->month = $blog->created_at->format('m');
             $blogs[] = $blog;
         }
 

@@ -95,7 +95,7 @@ export default {
   width: 0%;
   transition: width 0.2s, opacity 0.4s;
   opacity: 1;
-  background-color: #efc14e !important;
+  background-color: #ee540e !important;
   z-index: 999999;
 }
 </style>
