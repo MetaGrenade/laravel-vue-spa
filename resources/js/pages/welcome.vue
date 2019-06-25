@@ -1,14 +1,15 @@
 <template>
   <div class="container">
-    <div class="top-right links">
-      <router-link :to="{ name: 'documentation' }">
-        <a class="text-orange">
-        <fa :icon="'book'" fixed-width/> {{ $t('documentation') }}
-        </a>
+    <div class="top-left links d-none d-sm-block">
+      <router-link :to="{ name: 'documentation' }" :class="'text-orange'">
+        <fa icon="book" fixed-width /> {{ $t('documentation') }}
       </router-link>
+      <!-- <a href="https://join.slack.com/t/metagrenade/shared_invite/enQtNjc1MjQ0ODc4OTE5LTNhM2RlN2M5NmM2ODBjOTYwY2Q4ZTljYjYwZmY4NTMzZWMzNDZkY2YxMzk2NTNlNTZmNmY3ZTEzZmE3YmQyM2M" class="text-slack" target="_blank"><fa :icon="['fab', 'slack']" fixed-width/> Join Slack Chat</a> -->
+    </div>
+    <div class="top-right links">
       <template v-if="authenticated">
         <router-link :to="{ name: 'home' }">
-          <fa :icon="'home'" fixed-width/> {{ $t('home') }}
+          <fa icon="home" fixed-width /> {{ $t('home') }}
         </router-link>
       </template>
       <template v-else>
@@ -26,10 +27,9 @@
         <div class="col-12 col-lg-8 mx-auto mt-4">
           <img src="/img/logo_orange.png" class="img-fluid my-4" alt="MetaGrenade - Lavael Vue SPA Boilerplate">
         </div>
-        
         <h1>Laravel Vue SPA</h1>
         <div class="col-12 col-lg-6 mx-auto">
-          <p class="mx-auto text-muted">A Simple & Powerful, Open-source Boilerplate for <strong><i>'Single Page Applications'</i></strong> Using <u>Laravel</u> & <u>Vue</u>.</p>
+          <p class="mx-auto text-muted">A Simple & Powerful, Open-source Boilerplate for <strong>API Powered</strong> <i>'Single Page Applications'</i> Using <u>Laravel 5.8</u> & <u>Vue 2</u>.</p>
         </div>
         
 
@@ -37,20 +37,25 @@
           <a class="btn btn-light btn-orange mb-2" href="#">
             Download v0.0.1 <fa :icon="'download'" fixed-width/>
           </a>
-          <a class="btn btn-light border-primary text-primary mb-2" href="https://github.com/metagrenade/laravel-vue-spa">
+          <a class="btn btn-light border-primary text-primary mb-2" href="https://github.com/metagrenade/laravel-vue-spa" target="_blank">
             View on GitHub <fa :icon="['fab', 'github']" fixed-width/>
           </a>
-          <a href="https://join.slack.com/t/metagrenade/shared_invite/enQtNjc1MjQ0ODc4OTE5LTNhM2RlN2M5NmM2ODBjOTYwY2Q4ZTljYjYwZmY4NTMzZWMzNDZkY2YxMzk2NTNlNTZmNmY3ZTEzZmE3YmQyM2M" class="btn btn-light btn-slack mb-2">Join Slack Community <fa :icon="['fab', 'slack']" fixed-width/></a>
+          <a href="https://join.slack.com/t/metagrenade/shared_invite/enQtNjc1MjQ0ODc4OTE5LTNhM2RlN2M5NmM2ODBjOTYwY2Q4ZTljYjYwZmY4NTMzZWMzNDZkY2YxMzk2NTNlNTZmNmY3ZTEzZmE3YmQyM2M" class="btn btn-light btn-slack mb-2" target="_blank">Join Slack Chat <fa :icon="['fab', 'slack']" fixed-width/></a>
         </div>
-        <div class="col-12 links mb-4">
-          <a href="https://github.com/metagrenade/laravel-vue-spa" class="text-primary">github.com/metagrenade/laravel-vue-spa</a>
+        <div class="col-12 links mb-4 d-block d-sm-none">
+          <router-link :to="{ name: 'documentation' }" class="text-orange">
+            <fa icon="book" fixed-width /> {{ $t('documentation') }}
+          </router-link>
+        </div>
+        <div class="col-12 links mb-4 d-none d-sm-block">
+          <p class="text-muted">Made with <fa :icon="'heart'" :class="'text-danger'" fixed-width/> by a Community of Developers!</p>
         </div>
       </div>
 
       <div class="col-12 col-lg-6">
         <h3 class="text-center">Tech Stack:</h3>
         <div class="row">
-          <div class="col-12 col-lg-6">
+          <div class="col-12 col-lg-6 mb-4">
             <ul class="list-group">
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 <a href="https://laravel.com/docs/5.8" target="_blank">Laravel</a>
@@ -78,7 +83,7 @@
               </li>
             </ul>
           </div>
-          <div class="col-12 col-lg-6">
+          <div class="col-12 col-lg-6 mb-4">
             <ul class="list-group">
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 <a href="https://github.com/axios/axios" target="_blank">Axios</a>
@@ -167,18 +172,68 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins/_breakpoints";
+
+h1 {
+  @include media-breakpoint-only(xs) {
+    font-size: 25px;
+  }
+  @include media-breakpoint-only(sm) {
+    font-size: 35px;
+  }
+  @include media-breakpoint-only(md) {
+    font-size: 45px;
+  }
+  @include media-breakpoint-only(lg) {
+    font-size: 55px;
+  }
+  @include media-breakpoint-only(xl) {
+    font-size: 75px;
+  }
+}
+  
+.top-left {
+  position: absolute;
+  left: 10px;
+  top: 18px;
+  z-index: 1000;
+}
+
 .top-right {
   position: absolute;
   right: 10px;
   top: 18px;
+  z-index: 999;
 }
 
-h1 {
-  font-size: 75px;
+.links > a:hover {
+  opacity: 0.5;
+  filter: opacity(0.5);
+}
+
+.text-slack {
+  color: #4a154b !important;
 }
 
 p {
-  font-size: 24px;
+  
+  @include media-breakpoint-only(xs) {
+    font-size: 18px;
+  }
+  @include media-breakpoint-only(sm) {
+    font-size: 18px;
+  }
+  @include media-breakpoint-only(md) {
+    font-size: 20px;
+  }
+  @include media-breakpoint-only(lg) {
+    font-size: 22px;
+  }
+  @include media-breakpoint-only(xl) {
+    font-size: 24px;
+  }
 }
 
 .list-group {

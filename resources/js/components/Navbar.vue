@@ -18,6 +18,14 @@
             <a class="nav-link" href="#">Blog</a>
           </li> -->
           <div @click="offcanvas">
+            <router-link :to="{ name: 'documentation' }" tag="li">
+              <a class="nav-link text-orange" href="#">
+                <fa icon="book" fixed-width />
+                {{ $t('documentation') }}
+              </a>
+            </router-link>
+          </div>
+          <div @click="offcanvas">
             <router-link :to="{ name: 'blog' }" tag="li">
               <a class="nav-link" href="#">
                 <fa icon="newspaper" fixed-width />
