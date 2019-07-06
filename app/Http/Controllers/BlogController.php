@@ -70,11 +70,10 @@ class BlogController extends Controller
 
     public function show($slug)
     {
-        $blog = Blog::where('slug', $slug)->first();
+        $blog = Blog::with('category', 'user')->where('slug', $slug)->first();
         
         $results = array(
             'blog' => $blog,
-            'author' => $blog->user,
             'related_blogs' => array(),
             'recently_posted_blogs' => array(),
         );

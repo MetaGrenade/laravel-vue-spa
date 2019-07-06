@@ -9,13 +9,26 @@
 					<p>{{ $t('documentation_welcome') }}</p>
 				</div>
 				<div class="col-12">
-					<h3>Getting Started</h3>
+					<h3 id="1">Getting Started</h3>
 					<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse nisi rem exercitationem quidem eum repudiandae! Laborum repudiandae totam accusantium eum nam, incidunt at quae provident id. Soluta porro inventore adipisci!</p>
 
-					<h5>Requirements</h5>
+					<h5 id="1-1">Requirements</h5>
+					<ol>
+						<li>Composer</li>
+						<li>Node.js</li>
+						<li>PHP >= 7.1.3</li>
+						<li>BCMath PHP Extension</li>
+						<li>Ctype PHP Extension</li>
+						<li>JSON PHP Extension</li>
+						<li>Mbstring PHP Extension</li>
+						<li>OpenSSL PHP Extension</li>
+						<li>PDO PHP Extension</li>
+						<li>Tokenizer PHP Extension</li>
+						<li>XML PHP Extension</li>
+					</ol>
 					<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem similique commodi, quisquam perferendis suscipit consectetur illo quidem veniam delectus amet optio soluta, provident distinctio. Laudantium voluptatem consequatur repellendus eius saepe!</p>
 
-					<h5>Installation</h5>
+					<h5 id="1-2">Installation</h5>
 					<ol>
 						<li>Download latest stable version .Zip from <a href="#">here</a> or Clone/Download from <a href="#">Github</a></li>
 						<li>Extract .Zip contents to desired project location</li>
@@ -55,9 +68,9 @@
 				</h5>
 				<div class="card-body">
 					<ul>
-						<li class="text-orange"><a href="#"><strong>Getting Started</strong></a></li>
-						<li class="text-light-orange ml-4"><a href="#">Requirements</a></li>
-						<li class="text-light-orange ml-4"><a href="#">Installation</a></li>
+						<li class="text-orange"><a href="#1"><strong>Getting Started</strong></a></li>
+						<li class="text-light-orange ml-4"><a href="#1-1">Requirements</a></li>
+						<li class="text-light-orange ml-4"><a href="#1-2">Installation</a></li>
 					</ul>
 				</div>
 			</div>

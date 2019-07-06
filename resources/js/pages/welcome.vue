@@ -137,8 +137,24 @@
               <h5 class="mb-1">User Manager</h5>
               <small class="text-warning">Work In Progress</small>
             </div>
-            <p class="mb-1">View & Manage your applications Users, the Roles they belong to & Permissions they have! </p>
+            <p class="mb-1">View & Manage your applications Users, the Roles they belong to & Permissions they have!</p>
             <small class="text-muted">Users, Roles & Permissions, Admin</small>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">Bulk Emailing System</h5>
+              <small class="text-primary">Planned</small>
+            </div>
+            <p class="mb-1">Send Email notifications to individual users, or all users within a specified role/group.</p>
+            <small class="text-muted">???</small>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">Push Notifications</h5>
+              <small class="text-primary">Planned</small>
+            </div>
+            <p class="mb-1">Send real time push notifications to individual users, or all users within a specified role/group.</p>
+            <small class="text-muted">Powered by Pusher</small>
           </a>
         </div>
       </div>

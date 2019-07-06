@@ -21,7 +21,7 @@
         </router-link>
       </div>
       <div class="card-footer text-muted">
-        Posted on {{ blog.created_at }} by <a href="#">Start Bootstrap</a>
+        Posted on {{ blog.created_at }} by <a href="#">{{ blog.user.name }}</a>
       </div>
     </div>
   </div>
