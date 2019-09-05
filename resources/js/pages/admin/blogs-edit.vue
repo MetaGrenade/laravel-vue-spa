@@ -41,7 +41,7 @@
 						</select>
 						<has-error :form="form" field="published"></has-error>
 					</div>
-					
+
 					<div class="form-group col-12">
 						<label for="image">Image: <small v-if="form.image !== null" class="text-muted">Current = {{ form.image }}</small></label>
 						<input type="file" name="image" class="form-control" ref="fileUpload" v-on:change="onFileChange">
@@ -114,7 +114,7 @@ export default {
 	},
 
 	computed: {
-		
+
 	},
 
 	created () {
@@ -158,7 +158,7 @@ export default {
 			input.value = '';
 
 			this.previewImage = '';
-		}, 
+		},
 		async update () {
 			// Submit the form via a POST request
 			await this.form.patch('/api/admin/blogs/'+this.$route.params.id)
@@ -174,12 +174,12 @@ export default {
 					}
 				})
 				// .then(({ data }) => {
-				// 	console.log(data) 
+				// 	console.log(data)
 				// 	alert('YAY')
-					
+
 				// 	// Update the blog Store.
 				// 	// await this.$store.dispatch('updateBlog', { blog: data })
-					
+
 				// 	this.form.reset()
 				// })
 				.catch(error => {

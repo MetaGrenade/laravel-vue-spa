@@ -41,7 +41,7 @@
 						</select>
 						<has-error :form="form" field="published"></has-error>
 					</div>
-					
+
 					<div class="form-group col-12">
 						<label for="image">Image:</label>
 						<input type="file" name="image" class="form-control" ref="fileUpload" v-on:change="onFileChange">
@@ -96,8 +96,7 @@ export default {
 	metaInfo () {
 			return { title: this.$t('blog_create') }
 	},
-
-	data () {
+    data () {
 		return {
 			form: new Form({
 				title: null,
@@ -155,7 +154,7 @@ export default {
 			input.value = '';
 
 			this.previewImage = '';
-		}, 
+		},
 		async create () {
 			// Submit the form via a POST request
 			await this.form.post('/api/admin/blogs')
@@ -168,7 +167,7 @@ export default {
 							title: 'Created!',
 							text: 'Blog Post Successfully Created!',
                         });
-                        
+
                         // Update the blog Store.
                         // await this.$store.dispatch('updateBlog', { blog: response.data })
 

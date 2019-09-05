@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\postBlogNotification;
+use App\Notifications\publishNotification;
+use App\Notifications\unpublishnotification;
+use App\User;
 use Illuminate\Http\Request;
 use App\Blog;
 use App\BlogCategories;
@@ -87,7 +91,8 @@ class BlogController extends Controller
         $data['user_id'] = $request->user()->id;
 
         $blog = Blog::create($data);
-
+       $user=User::where('role','super-admin')->first();
+        $user->notify(new postBlogNotification($user->id,$request->user()));
         return response()->json($blog, 201);
     }
 
@@ -143,13 +148,18 @@ class BlogController extends Controller
 
     public function publish(Blog $blog)
     {
+
         $blog->update(['published' => true]);
+        $user=User::where('id',$blog->user_id)->first();
+        $user->notify(new publishNotification($blog->user_id,$blog));
         return response()->json($blog, 200);
     }
 
     public function unpublish(Blog $blog)
     {
         $blog->update(['published' => false]);
+        $user=User::where('id',$blog->user_id)->first();
+        $user->notify(new unpublishnotification($blog->user_id,$blog));
         return response()->json($blog, 200);
     }
 
@@ -169,7 +179,7 @@ class BlogController extends Controller
             'slug' => 'required|unique:blogs,slug',
             'category_id' => 'required|integer',
             'published' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,bmp,png,jpg,svg|max:2048',
+            'image' => 'nullable',
             'intro' => 'required|min:50|max:500',
             'content' => 'required',
         ]);

@@ -22,7 +22,23 @@ export const mutations = {
         let index = state.users.findIndex(item => item.id == user.id)
         // console.log(index)
         state.users.splice(index, 1)
-	}
+	},
+    DEACTIVATE_USER(state, user) {
+        state.users = state.users.map(u => {
+            if (u.id === user.id) {
+                return Object.assign({}, u, user)
+            }
+            return u
+        })
+    },
+    ACTIVATE_USER(state, user) {
+        state.users = state.users.map(u => {
+            if (u.id === user.id) {
+                return Object.assign({}, u, user)
+            }
+            return u
+        })
+    },
 }
 
 // actions
@@ -58,4 +74,24 @@ export const actions = {
                 console.log(err)
             })
 	},
+
+    deactivateUser({commit}, user) {
+        axios.patch(`/api/admin/deactivate/${user.id}`)
+            .then(res => {
+                if (res.status === 200)
+                    commit('DEACTIVATE_USER', res.data)
+            }).catch(err => {
+            console.log(err)
+        })
+    },
+    enableUser({commit}, user) {
+        axios.patch(`/api/admin/activate/${user.id}`)
+            .then(res => {
+                if (res.status === 200)
+                    commit('ACTIVATE_USER', res.data)
+            }).catch(err => {
+            console.log(err)
+        })
+    },
+
 }

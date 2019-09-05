@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Role;
+use Illuminate\Support\Facades\DB;
 
 class RoleTableSeeder extends Seeder
 {
@@ -12,7 +13,15 @@ class RoleTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('roles')->truncate();
+        $role = new Role();
+        $role->title = 'Super Admin';
+        $role->slug = 'super-admin';
+        $role->icon = 'crown';
+        $role->color = 'text-danger';
+        $role->description = 'Reserved for Developers';
+        $role->access_level = 99;
+        $role->save();
         $role = new Role();
         $role->title = 'Banned';
         $role->slug = 'banned';
@@ -85,13 +94,6 @@ class RoleTableSeeder extends Seeder
         $role->access_level = 6;
         $role->save();
         
-        $role = new Role();
-        $role->title = 'Super Admin';
-        $role->slug = 'super-admin';
-        $role->icon = 'crown';
-        $role->color = 'text-danger';
-        $role->description = 'Reserved for Developers';
-        $role->access_level = 99;
-        $role->save();
+
     }
 }

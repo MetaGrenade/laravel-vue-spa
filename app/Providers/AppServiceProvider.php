@@ -30,5 +30,21 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('local', 'testing')) {
             $this->app->register(DuskServiceProvider::class);
         }
+        $this->app->bind(
+            'App\Contracts\API\v1\RoleInterface',
+            'App\Services\API\v1\RoleService'
+        );
+        $this->app->bind(
+            'App\Contracts\API\v1\PermissionInterface',
+            'App\Services\API\v1\PermissionService'
+        );
+        $this->app->bind(
+            'App\Contracts\API\v1\NotificationInterface',
+            'App\Services\API\v1\NotificationService'
+        );
+        $this->app->bind(
+            'App\Contracts\API\v1\EmailsInterface',
+            'App\Services\API\v1\EmailsService'
+        );
     }
 }
