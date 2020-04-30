@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     //
-    public function users()
+    public function user()
     {
-        return $this->belongsToMany('App\User', 'user_has_role', 'role_id', 'user_id');
+        return $this->belongsTo('App\User');
     }
 
     
     public function permissions()
     {
-        return $this->belongsToMany('App\Permission', 'role_has_permission', 'role_id', 'permission_id');
+        return $this->belongsToMany(Permission::class,'permission_role','role_id','permission_id' );
     }
 }

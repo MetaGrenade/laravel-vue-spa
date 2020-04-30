@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CreateNewUser;
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class AdminUsersController extends Controller
 {
@@ -30,35 +33,88 @@ class AdminUsersController extends Controller
 
     public function index()
     {
-        $users = User::all();
+        $users = User::with('roles')->get();
         return response()->json($users, 200);
     }
 
     public function show(User $user)
     {
-        return response()->json($user, 200);
+
+        $role = DB::table('user_role')->where('user_id', $user->id)->first();
+
+        $results = array(
+            'user' => $user,
+            'user_role' => $role
+        );
+
+        return response()->json($results, 200);
     }
 
     public function store(Request $request)
     {
         $data = self::formValidation($request);
+        $rndmString = str_random(50);
+        $userId = DB::table('users')->insertGetId(
+            [
+                'name'     =>  $data['name'],
+                'email'   =>   $data['email'],
+                'activation_key'   =>  $rndmString,
+            ]
+        );
+        $role = DB::table('user_role')->insert(
+            [
+                'user_id' => $userId,
+                'role_id' => $data['role']
+            ]
+        );
 
-        $user = User::create($data);
+        if($userId)
+        {
+            $userDetails = DB::table('users')->where('id', $userId)->get();
+            Mail::to($data['email'])->send(new CreateNewUser($userDetails));
+        }
 
-        return response()->json($user, 201);
+        return response()->json($userId, 201);
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request)
     {
-        $data = self::formValidation($request, $user);
+        //dd($request);
+        $data = self::formUpdateValidation($request);
+        $updateUser = DB::table('users')
+            ->where('id', $request->id)
+            ->update([
+                'name' => $data['name'],
+            ]);
+        $userRole = DB::table('user_role')->where('user_id', $request->id)->delete();
+        $assignRole = DB::table('user_role')->insert(['user_id'=>$request->id, 'role_id'=>$data['role']]);
+        return response()->json($updateUser, 200);
+    }
 
-        $user->update($data);
+    public function deactivateUser(Request $request)
+    {
+        $deactivated = DB::table('users')
+            ->where('id', $request->userId)
+            ->update([
+                'status' => 0,
+            ]);
+        $user = DB::table('users')->where('id', $request->userId)->first();
+        return response()->json($user, 200);
+    }
+    public function activate(Request $request)
+    {
+        $deactivated = DB::table('users')
+            ->where('id', $request->userId)
+            ->update([
+                'status' => 1,
+            ]);
+        $user = DB::table('users')->where('id', $request->userId)->first();
         return response()->json($user, 200);
     }
 
     public function delete(User $user)
     {
-        try 
+        try
         {
             $user->delete();
             return response()->json(null, 204);
@@ -70,7 +126,7 @@ class AdminUsersController extends Controller
 
     public function forceDelete(User $user)
     {
-        try 
+        try
         {
             $user->forceDelete();
             return response()->json(null, 204);
@@ -78,5 +134,26 @@ class AdminUsersController extends Controller
         catch (Exception $e) {
             return response()->json($e->getMessage(), 500);
         }
+    }
+
+    function formValidation($data)
+    {
+        $validated = $this->validate($data, [
+            'name' => 'required|max:80',
+            'email' => 'required|email|unique:users,email',
+            'role' => 'required|integer',
+        ]);
+
+        return $validated;
+    }
+
+    function formUpdateValidation($data)
+    {
+        $validated = $this->validate($data, [
+            'name' => 'required|max:80',
+            'role' => 'required|integer',
+        ]);
+
+        return $validated;
     }
 }

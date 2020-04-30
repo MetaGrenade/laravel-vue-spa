@@ -17,7 +17,8 @@
 - Pages with dynamic import and custom layouts
 - Login, register, email verification and password reset
 - Authentication with JWT
-- Socialite integration
+- Pusher
+- Access Control Level (ACL) implemented
 - Bootstrap 4 + Font Awesome 5
 
 ## Installation
@@ -26,7 +27,18 @@
 - Edit `.env` and set your database connection details
 - (When installed via git clone or download, run `php artisan key:generate` and `php artisan jwt:secret`)
 - `php artisan migrate`
+- `php artisan db:seed`
 - `npm install`
+
+## Configuration
+
+- Edit `resources/js/plugins/axios.js` and set base url in "request interceptor"
+- Edit `.env` Add configuration for pusher. Set BROADCAST_DRIVER to pusher and QUEUE_DRIVER to sync
+- Edit `resources/js/boostrap.js` Add configuration for pusher
+- By default all permissions are assigned to super admin. Super admin need to assign relevant permissions to other roles
+- To send out emails, make sure to set up email configurations in `.env`
+
+
 
 ## Usage
 

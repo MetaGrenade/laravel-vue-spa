@@ -19,7 +19,7 @@
 
 <script>
 // import { mapState } from 'vuex'
-import axios from 'axios'
+import s from 'axios'
 
 import BlogViewSideModules from '../components/blog/BlogViewSideModules.vue'
 

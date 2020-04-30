@@ -1,8 +1,13 @@
 <template>
   	<div class="row">
 		<div class="col-12">
-			<h1>
-				Blog Management <router-link :to="{ name: 'admin.blogs.create' }"><button class="btn btn-success"><fa :icon="'plus'" fixed-width /> Create Blog</button></router-link>
+			<h1 v-if="permission.length">
+				Blog Management <router-link :to="{ name: 'admin.blogs.create' }">
+				<button v-for="item in permission" v-if="item.name=='create-blog' || isUserSuperAdmin" class="btn btn-success"><fa :icon="'plus'" fixed-width /> Create Blog</button></router-link>
+			</h1>
+			<h1 v-if="!permission.length && role=='super-admin'">
+				Blog Management <router-link :to="{ name: 'admin.blogs.create' }">
+				<button  class="btn btn-success"><fa :icon="'plus'" fixed-width /> Create Blog</button></router-link>
 			</h1>
 			<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolor molestiae et adipisci minima fugiat possimus. Rem quos animi nisi, quod consequatur nemo accusantium quidem magnam officia veniam, voluptas dicta saepe.</p>
 			<table class="table table-striped table-hover table-bordered">
@@ -36,21 +41,41 @@
 						<td :class="{ 'text-success': blog.published, 'text-danger': !blog.published, 'align-middle': true === true }">
 							{{ blog.created_at }}
 						</td>
-						<td class="align-middle">
-							<router-link :to="{ name: 'admin.blogs.edit', params: { id: blog.id } }">
-								<button class="btn btn-sm btn-primary">
-									Edit
+						<td class="align-middle btn_inline" v-if="permission.length">
+							<div class="btn-group btn-custom">
+								<router-link  :to="{ name: 'admin.blogs.edit', params: { id: blog.id } }">
+									<button v-for="item in permission" v-if="item.name=='edit-blog' || isUserSuperAdmin" class="btn btn-sm btn-primary">
+										Edit
+									</button>
+								</router-link>
+								<button  v-for="item in permission" v-if="item.name=='hide-blog' && blog.published" class="btn btn-sm btn-secondary" @click="hideBlog(blog)">
+									Hide
 								</button>
-							</router-link>
-							<button v-if="blog.published" class="btn btn-sm btn-secondary" @click="hideBlog(blog)">
-								Hide
-							</button>
-							<button v-else class="btn btn-sm btn-secondary" @click="publishBlog(blog)">
-								Publish
-							</button>
-							<button class="btn btn-sm btn-danger" @click="deleteBlog(blog)">
-								Delete
-							</button>
+								<button v-for="item in permission" v-if="item.name=='publish-blog' && !blog.published" class="btn btn-sm btn-secondary" @click="publishBlog(blog)">
+									Publish
+								</button>
+								<button v-for="item in permission" v-if="item.name=='delete-blog' || isUserSuperAdmin" class="btn btn-sm btn-danger" @click="deleteBlog(blog)">
+									Delete
+								</button>
+							</div>
+						</td>
+						<td class="align-middle btn-custom" v-if="!permission.length && role=='super-admin'">
+							<div class="btn-group">
+								<router-link :to="{ name: 'admin.blogs.edit', params: { id: blog.id } }">
+									<button class="btn btn-sm btn-primary">
+										Edit
+									</button>
+								</router-link>
+								<button v-if="blog.published" class="btn btn-sm btn-secondary" @click="hideBlog(blog)">
+									Hide
+								</button>
+								<button v-else class="btn btn-sm btn-secondary" @click="publishBlog(blog)">
+									Publish
+								</button>
+								<button class="btn btn-sm btn-danger" @click="deleteBlog(blog)">
+									Delete
+								</button>
+							</div>
 						</td>
 					</tr>
 				</tbody>
@@ -75,6 +100,8 @@ export default {
 	data () {
 		return {
 			// blogs: {}
+			permission:[],
+			role:'',
 		}
 	},
 
@@ -82,10 +109,15 @@ export default {
 		'blogs'
 	]),
 
-	// created () {
-	// 	// Fill the form with blog data.
-	// 	this.fetchBlogs()
-	// },
+	created () {
+		// Fill the form with blog data.
+		let data=JSON.parse(localStorage.getItem('user_detail'));
+		if(data.roles.length){
+			this.permission=data.roles[0].permissions.map(item=>({name:item.slug,id:item.id}));
+		}else{
+		this.role=	data.role;
+		}
+	},
 
 	mounted() {
 		this.$store.dispatch('blogs/fetchBlogsAdmin')
@@ -168,3 +200,8 @@ export default {
   	}
 }
 </script>
+<style scoped>
+	.btn-custom button{
+		margin-left: 2px;
+	}
+</style>

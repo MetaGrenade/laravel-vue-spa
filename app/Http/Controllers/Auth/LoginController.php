@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Exceptions\VerifyEmailException;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -64,6 +66,7 @@ class LoginController extends Controller
             'token' => $token,
             'token_type' => 'bearer',
             'expires_in' => $expiration - time(),
+            'user'=>User::with('roles.permissions')->where('id',Auth::user()->id)->get()
         ]);
     }
 

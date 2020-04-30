@@ -4,6 +4,8 @@ namespace App;
 
 use App\Notifications\VerifyEmail;
 use App\Notifications\ResetPassword;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\App;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -12,6 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
 {
     use Notifiable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -49,16 +52,16 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
         'photo_url',
     ];
 
-    
+
     public function blogs()
     {
         return $this->belongsToMany('App\Blog');
-    }    
-
-    public function roles()
-    {
-        return $this->belongsToMany('App\Role', 'user_has_role', 'user_id', 'role_id');
     }
+
+//    public function roles()
+//    {
+//        return $this->belongsToMany('App\Role', 'user_role', 'user_id', 'role_id');
+//    }
 
 
     /**
@@ -108,6 +111,9 @@ class User extends Authenticatable implements JWTSubject //, MustVerifyEmail
     public function getJWTIdentifier()
     {
         return $this->getKey();
+    }
+    public function roles(){
+        return $this->belongsToMany('App\Role','user_role','user_id','role_id');
     }
 
     /**

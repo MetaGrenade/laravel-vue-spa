@@ -19,11 +19,15 @@ export const getters = {
 export const mutations = {
   [types.SAVE_TOKEN] (state, { token, remember }) {
     state.token = token
+
     Cookies.set('token', token, { expires: remember ? 365 : null })
+    localStorage.setItem('token',token);
   },
 
   [types.FETCH_USER_SUCCESS] (state, { user }) {
     state.user = user
+    localStorage.setItem('user_detail',JSON.stringify(user));
+
   },
 
   [types.FETCH_USER_FAILURE] (state) {

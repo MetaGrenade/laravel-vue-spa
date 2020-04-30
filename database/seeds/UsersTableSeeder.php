@@ -13,7 +13,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('users')->truncate();
         DB::table('users')->insert([
             'name' => 'Super Admin',
             'email' => 'superadmin@admin.com',
